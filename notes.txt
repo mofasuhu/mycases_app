@@ -2646,8 +2646,6 @@ git config --global http.sslCAInfo "D:/Docs/CV/GitHub/chestnut.cer"
 mofasuhu
 mfsh$0$Github
 fromOffice github token
-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
-git remote set-url origin https://   <addtokenhere>  @github.com/mofasuhu/mycases_app.git
 
 to save credentials
 git config --global credential.helper wincred
