@@ -85,9 +85,9 @@ class SurveyFormFirst(QDialog):
         case_info_layout.setFieldGrowthPolicy(QFormLayout.FieldsStayAtSizeHint)
         
         # Display basic case information
-        child_name = self.case_data.get("child_name", "-")
-        dob = self.case_data.get("dob", "-")
-        gender = self.case_data.get("gender", "-")
+        child_name = self.case_data.get("child_name", {}).get("value", "-")
+        dob = self.case_data.get("dob", {}).get("value", "-")
+        gender = self.case_data.get("gender", {}).get("value", "-")
         case_id = self.case_data.get("case_id", "-")
         
         case_info_layout.addRow(QLabel("اسم الحالة:"), QLabel(child_name))
@@ -665,9 +665,9 @@ class SurveyFormFirst(QDialog):
             "survey_type": "استبيان التقييم الأول",
             "survey_date": self.survey_date_edit.date().toString("yyyy-MM-dd"),
             "case_id": self.case_data.get("case_id", ""),
-            "child_name": self.case_data.get("child_name", ""),
-            "dob": self.case_data.get("dob", ""),
-            "gender": self.case_data.get("gender", ""),
+            "child_name": self.case_data.get("child_name", {}).get("value", ""),
+            "dob": self.case_data.get("dob", {}).get("value", ""),
+            "gender": self.case_data.get("gender", {}).get("value", ""),
             "submission_timestamp": datetime.now().isoformat()
         }
 
@@ -760,91 +760,7 @@ class SurveyFormFirst(QDialog):
             "birth_defects": field_value(self.birth_defects_label, self.birth_defects_combo, True),
             "birth_defects_what": field_value(self.birth_defects_what_label, self.birth_defects_what_edit, False),
         })
-        # # Add all survey fields
-        # survey_data.update({
-        #     "school_attendance": self.school_attendance_combo.currentText(),
-        #     "school_year": self.school_year_edit.text(),
-        #     "school_duration": self.school_duration_edit.text(),
-        #     "school_type": self.school_type_edit.text(),
-        #     "school_discontinue": self.school_discontinue_edit.text(),
-        #     "care_center": self.care_center_combo.currentText(),
-        #     "care_duration": self.care_duration_edit.text(),
-        #     "care_type": self.care_type_edit.text(),
-        #     "care_discontinue": self.care_discontinue_edit.text(),
-        #     "academic_issues": self.academic_issues_combo.currentText(),
-        #     "academic_issues_type": self.academic_issues_type_edit.text(),
-        #     "abnormal_dev": self.abnormal_dev_edit.text(),
-        #     "abnormal_dev_what": self.abnormal_dev_what_edit.text(),
-        #     "diagnosis_what": self.diagnosis_what_edit.text(),
-        #     "breastfeeding_duration": self.breastfeeding_duration_edit.text(),
-        #     "breastfeeding_type": self.breastfeeding_type_combo.currentText(),
-        #     "weaning": self.weaning_combo.currentText(),
-        #     "weaning_age": self.weaning_age_edit.text(),
-        #     "breastfeeding_problems": self.breastfeeding_problems_edit.text(),
-        #     "teething": self.teething_edit.text(),
-        #     "crawling": self.crawling_edit.text(),
-        #     "sitting": self.sitting_edit.text(),
-        #     "standing": self.standing_edit.text(),
-        #     "walking_start": self.walking_start_edit.text(),
-        #     "walking": self.walking_edit.text(),
-        #     "diaper_free": self.diaper_free_edit.text(),
-        #     "bathroom_request": self.bathroom_request_combo.currentText(),
-        #     "bathroom_independence": {"ar_key":self.bathroom_independence_label.text(), "value":self.bathroom_independence_combo.currentText()},
-        #     "vision_issues": self.vision_issues_combo.currentText(),
-        #     "vision_type": self.vision_type_edit.text(),
-        #     "vision_severity": self.vision_severity_edit.text(),
-        #     "hearing_issues": self.hearing_issues_combo.currentText(),
-        #     "hearing_type": self.hearing_type_combo.currentText(),
-        #     "hearing_severity": self.hearing_severity_edit.text(),
-        #     "hearing_aid": self.hearing_aid_combo.currentText(),
-        #     "hearing_aid_type": self.hearing_aid_type_edit.text(),
-        #     "cochlear_implant": self.cochlear_implant_combo.currentText(),
-        #     "cochlear_since": self.cochlear_since_edit.text(),
-        #     "speech_tone": self.speech_tone_combo.currentText(),
-        #     "speech_volume": self.speech_volume_combo.currentText(),
-        #     "drooling": self.drooling_combo.currentText(),
-        #     "swallowing": self.swallowing_combo.currentText(),
-        #     "breathing": self.breathing_combo.currentText(),
-        #     "breathing_type": self.breathing_type_combo.currentText(),
-        #     "iq_test": self.iq_test_combo.currentText(),
-        #     "iq_score": self.iq_score_edit.text(),
-        #     "hearing_test": self.hearing_test_combo.currentText(),
-        #     "hearing_score": self.hearing_score_edit.text(),
-        #     "ear_pressure": self.ear_pressure_combo.currentText(),
-        #     "language_test": self.language_test_combo.currentText(),
-        #     "speech_test": self.speech_test_combo.currentText(),
-        #     "case_acceptance": self.case_acceptance_edit.text(),
-        #     "family_acceptance": self.family_acceptance_edit.text(),
-        #     "speech_therapy": self.speech_therapy_combo.currentText(),
-        #     "speech_therapy_progress": self.speech_therapy_progress_edit.text(),
-        #     "physical_therapy": self.physical_therapy_combo.currentText(),
-        #     "physical_therapy_progress": self.physical_therapy_progress_edit.text(),
-        #     "computer_therapy": self.computer_therapy_combo.currentText(),
-        #     "computer_therapy_progress": self.computer_therapy_progress_edit.text(),
-        #     "skills_therapy": self.skills_therapy_combo.currentText(),
-        #     "skills_therapy_progress": self.skills_therapy_progress_edit.text(),
-        #     "favorite_food": self.favorite_food_edit.text(),
-        #     "favorite_games": self.favorite_games_edit.text(),
-        #     "other_likes": self.other_likes_edit.text(),
-        #     "dislikes": self.dislikes_edit.text(),
-        #     "living_with": self.living_with_edit.text(),
-        #     "attached_people": self.attached_people_edit.text(),
-        #     "caregiver": self.caregiver_edit.text(),
-        #     "economic_status": self.economic_status_edit.text(),
-        #     "cultural_status": self.cultural_status_edit.text(),
-        #     "social_status": self.social_status_edit.text(),
-        #     "family_relationship": self.family_relationship_edit.text(),
-        #     "family_acceptance_rehab": self.family_acceptance_rehab_edit.text(),
-        #     "mother_health_pregnancy": self.mother_health_pregnancy_combo.currentText(),
-        #     "birth_type": self.birth_type_combo.currentText(),
-        #     "birth_weight": self.birth_weight_edit.text(),
-        #     "birth_cry": self.birth_cry_combo.currentText(),
-        #     "head_size": self.head_size_combo.currentText(),
-        #     "head_size_value": self.head_size_value_edit.text(),
-        #     "birth_defects": self.birth_defects_combo.currentText(),
-        #     "birth_defects_what": self.birth_defects_what_edit.text(),
-        # })
-        
+
         return survey_data
 
     def load_survey_data(self):

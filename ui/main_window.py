@@ -153,10 +153,10 @@ class MainWindow(QMainWindow):
                 case_data = load_case_data_from_json(folder_name)
                 display_name = folder_name # Default to folder name
                 
-                if case_data and ("child_name" in case_data) and (case_data["child_name"]):
+                if case_data and ("child_name" in case_data) and (case_data["child_name"]["value"]):
                     # Extract child name and DOB for a more descriptive list item
-                    child_name_display = case_data["child_name"]
-                    dob_display = case_data.get("dob", "")
+                    child_name_display = case_data["child_name"]["value"]
+                    dob_display = case_data.get("dob", {}).get("value", "")
                     case_id_display = case_data.get("case_id", "")
                     display_name = f"{child_name_display} - {dob_display} ({case_id_display})"
                     
@@ -295,7 +295,7 @@ class MainWindow(QMainWindow):
             return
 
         # Display confirmation dialog with case details
-        child_name = case_data.get("child_name", "")
+        child_name = case_data.get("child_name", {}).get("value", "")
         case_id = case_data.get("case_id", "")
         
         confirmation_message = f"هل أنت متأكد من حذف الحالة التالية نهائيًا؟\n\nاسم الحالة: {child_name}\nرقم الحالة: {case_id}\n\nلا يمكن التراجع عن هذا الإجراء."

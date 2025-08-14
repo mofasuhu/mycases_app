@@ -35,58 +35,68 @@ class CaseForm(QDialog):
         child_layout.setLabelAlignment(Qt.AlignRight)
         child_layout.setFieldGrowthPolicy(QFormLayout.FieldsStayAtSizeHint)  # Prevent fields from expanding
 
+        self.child_name_label = QLabel("اسم الحالة:")
         self.child_name_edit = QLineEdit()
         self.child_name_edit.setFixedWidth(325)
         self.child_name_edit.setFixedHeight(40)        
-        child_layout.addRow(QLabel("اسم الحالة:"), self.child_name_edit)
+        child_layout.addRow(self.child_name_label, self.child_name_edit)
 
         # --- For child DOB ---
         dob_widget, self.dob_edit, self.day_edit, self.month_edit, self.year_edit = create_dob_input(default_years_ago=5, on_date_changed=self.calculate_age)
-        child_layout.addRow(QLabel("تاريخ الميلاد:"), dob_widget)
+        self.dob_label = QLabel("تاريخ الميلاد:")
+        child_layout.addRow(self.dob_label, dob_widget)
 
         self.age_label = QLabel("يتم حسابه")
-        child_layout.addRow(QLabel("العمر:"), self.age_label)
+        self.age_text_label = QLabel("العمر:")
+        child_layout.addRow(self.age_text_label, self.age_label)
 
+        self.gender_label = QLabel("الجنس:")    
         self.gender_combo = QComboBox()
         self.gender_combo.addItems(["ذكر", "أنثى"])
         self.gender_combo.setFixedWidth(325)
         self.gender_combo.setFixedHeight(40)
         self.gender_combo.wheelEvent = lambda event: event.ignore()
-        child_layout.addRow(QLabel("الجنس:"), self.gender_combo)
+        child_layout.addRow(self.gender_label, self.gender_combo)
 
         self.first_lang_edit = QComboBox()
+        self.first_lang_label = QLabel("اللغة الأولى:")
         self.first_lang_edit.addItems(["اللغة العربية - مصر", "اللغة العربية - دولة أخرى", "اللغة الإنجليزية", "اللغة الفرنسية", "اللغة الألمانية", "لغة أخرى", "لا يوجد"])
         self.first_lang_edit.setFixedWidth(325)
         self.first_lang_edit.setFixedHeight(40)
         self.first_lang_edit.wheelEvent = lambda event: event.ignore()
-        child_layout.addRow(QLabel("اللغة الأولى:"), self.first_lang_edit)
+        child_layout.addRow(self.first_lang_label, self.first_lang_edit)
 
         self.first_lang_notes = QLineEdit()
+        self.first_lang_notes_label = QLabel("ملاحظات اللغة الأولى:")
         self.first_lang_notes.setFixedWidth(325)
         self.first_lang_notes.setFixedHeight(40)
-        child_layout.addRow(QLabel("ملاحظات اللغة الأولى:"), self.first_lang_notes)
+        child_layout.addRow(self.first_lang_notes_label, self.first_lang_notes)
 
         self.second_lang_edit = QComboBox()
+        self.second_lang_label = QLabel("اللغة الثانية:")
         self.second_lang_edit.addItems(["اللغة العربية - مصر", "اللغة العربية - دولة أخرى", "اللغة الإنجليزية", "اللغة الفرنسية", "اللغة الألمانية", "لغة أخرى", "لا يوجد"])
         self.second_lang_edit.setFixedWidth(325)
         self.second_lang_edit.setFixedHeight(40)
         self.second_lang_edit.wheelEvent = lambda event: event.ignore()
-        child_layout.addRow(QLabel("اللغة الثانية:"), self.second_lang_edit)
+        child_layout.addRow(self.second_lang_label, self.second_lang_edit)
 
         self.second_lang_notes = QLineEdit()
+        self.second_lang_notes_label = QLabel("ملاحظات اللغة الثانية:")
         self.second_lang_notes.setFixedWidth(325)
         self.second_lang_notes.setFixedHeight(40)
-        child_layout.addRow(QLabel("ملاحظات اللغة الثانية:"), self.second_lang_notes)
+        child_layout.addRow(self.second_lang_notes_label, self.second_lang_notes)
 
+        self.diagnosis_label = QLabel("التشخيص:")
         self.diagnosis_edit = QLineEdit()
         self.diagnosis_edit.setFixedWidth(325)
         self.diagnosis_edit.setFixedHeight(40)
-        child_layout.addRow(QLabel("التشخيص:"), self.diagnosis_edit)
+        child_layout.addRow(self.diagnosis_label, self.diagnosis_edit)
 
+        self.diagnosed_by_label = QLabel("بواسطة:")
         self.diagnosed_by_edit = QLineEdit()
         self.diagnosed_by_edit.setFixedWidth(325)
         self.diagnosed_by_edit.setFixedHeight(40)
-        child_layout.addRow(QLabel("بواسطة:"), self.diagnosed_by_edit)
+        child_layout.addRow(self.diagnosed_by_label, self.diagnosed_by_edit)
         
         child_group.setLayout(child_layout)
         self.main_layout.addWidget(child_group)
@@ -98,65 +108,77 @@ class CaseForm(QDialog):
         parents_layout.setLabelAlignment(Qt.AlignRight)
         parents_layout.setFieldGrowthPolicy(QFormLayout.FieldsStayAtSizeHint)  # Prevent fields from expanding
 
+        self.father_name_label = QLabel("اسم الأب:")
         self.father_name_edit = QLineEdit()
         self.father_name_edit.setFixedWidth(325)
         self.father_name_edit.setFixedHeight(40)
-        parents_layout.addRow(QLabel("اسم الأب:"), self.father_name_edit)
+        parents_layout.addRow(self.father_name_label, self.father_name_edit)
 
         # --- For father DOB ---
         father_widget, self.father_dob_edit, self.father_day_edit, self.father_month_edit, self.father_year_edit = create_dob_input(default_years_ago=30, on_date_changed=self.calculate_father_age)
-        parents_layout.addRow(QLabel("تاريخ ميلاد الأب:"), father_widget)
+        self.father_dob_label = QLabel("تاريخ ميلاد الأب:")
+        parents_layout.addRow(self.father_dob_label, father_widget)
         
         # Replace QSpinBox with QLabel for father's age
+        self.father_age_text_label = QLabel("عمر الأب:")
         self.father_age_label = QLabel("يتم حسابه")
-        parents_layout.addRow(QLabel("عمر الأب:"), self.father_age_label)
-        
+        parents_layout.addRow(self.father_age_text_label, self.father_age_label)
+
+        self.father_job_label = QLabel("وظيفة الأب:")
         self.father_job_edit = QLineEdit()
         self.father_job_edit.setFixedWidth(325)
         self.father_job_edit.setFixedHeight(40)
-        parents_layout.addRow(QLabel("وظيفة الأب:"), self.father_job_edit)
-        
+        parents_layout.addRow(self.father_job_label, self.father_job_edit)
+
+        self.father_health_label = QLabel("الحالة الصحية للأب:")
         self.father_health_edit = QLineEdit()
         self.father_health_edit.setFixedWidth(325)
         self.father_health_edit.setFixedHeight(40)
-        parents_layout.addRow(QLabel("الحالة الصحية للأب:"), self.father_health_edit)
+        parents_layout.addRow(self.father_health_label, self.father_health_edit)
 
+        self.mother_name_label = QLabel("اسم الأم:")
         self.mother_name_edit = QLineEdit()
         self.mother_name_edit.setFixedWidth(325)
         self.mother_name_edit.setFixedHeight(40)
-        parents_layout.addRow(QLabel("اسم الأم:"), self.mother_name_edit)
+        parents_layout.addRow(self.mother_name_label, self.mother_name_edit)
         
         # --- For mother DOB ---
         mother_widget, self.mother_dob_edit, self.mother_day_edit, self.mother_month_edit, self.mother_year_edit = create_dob_input(default_years_ago=25, on_date_changed=self.calculate_mother_age)
-        parents_layout.addRow(QLabel("تاريخ ميلاد الأم:"), mother_widget)
-        
-        # Replace QSpinBox with QLabel for mother's age
+        self.mother_dob_label = QLabel("تاريخ ميلاد الأم:")
+        parents_layout.addRow(self.mother_dob_label, mother_widget)
+
+        self.mother_age_text_label = QLabel("عمر الأم:")
         self.mother_age_label = QLabel("يتم حسابه")
-        parents_layout.addRow(QLabel("عمر الأم:"), self.mother_age_label)
-        
+        parents_layout.addRow(self.mother_age_text_label, self.mother_age_label)
+
+        self.mother_job_label = QLabel("وظيفة الأم:")
         self.mother_job_edit = QLineEdit()
         self.mother_job_edit.setFixedWidth(325)
         self.mother_job_edit.setFixedHeight(40)
-        parents_layout.addRow(QLabel("وظيفة الأم:"), self.mother_job_edit)
-        
+        parents_layout.addRow(self.mother_job_label, self.mother_job_edit)
+
+        self.mother_health_label = QLabel("الحالة الصحية للأم:")
         self.mother_health_edit = QLineEdit()
         self.mother_health_edit.setFixedWidth(325)
         self.mother_health_edit.setFixedHeight(40)
-        parents_layout.addRow(QLabel("الحالة الصحية للأم:"), self.mother_health_edit)
+        parents_layout.addRow(self.mother_health_label, self.mother_health_edit)
 
+        self.father_preg_age_text_label = QLabel("عمر الأب عند الولادة:")
         self.father_preg_age_label = QLabel("يتم حسابه")
-        parents_layout.addRow(QLabel("عمر الأب عند الولادة:"), self.father_preg_age_label)
-        
-        self.mother_preg_age_label = QLabel("يتم حسابه")
-        parents_layout.addRow(QLabel("عمر الأم عند الولادة:"), self.mother_preg_age_label)
+        parents_layout.addRow(self.father_preg_age_text_label, self.father_preg_age_label)
 
+        self.mother_preg_age_text_label = QLabel("عمر الأم عند الولادة:")
+        self.mother_preg_age_label = QLabel("يتم حسابه")
+        parents_layout.addRow(self.mother_preg_age_text_label, self.mother_preg_age_label)
+
+        self.parents_relation_label = QLabel("صلة قرابة بين الوالدين؟")
         self.parents_relation_combo = QComboBox()
         self.parents_relation_combo.addItems(["نعم", "لا"])
         self.parents_relation_combo.currentIndexChanged.connect(self.toggle_relation_degree)
         self.parents_relation_combo.setFixedWidth(325)
         self.parents_relation_combo.setFixedHeight(40)
         self.parents_relation_combo.wheelEvent = lambda event: event.ignore()
-        parents_layout.addRow(QLabel("صلة قرابة بين الوالدين؟"), self.parents_relation_combo)
+        parents_layout.addRow(self.parents_relation_label, self.parents_relation_combo)
 
         self.relation_degree_label = QLabel("درجة القرابة:")
         self.relation_degree_edit = QComboBox()
@@ -177,41 +199,45 @@ class CaseForm(QDialog):
         # --- Family Information Group ---
         family_group = QGroupBox("معلومات الأسرة")
         family_layout = QFormLayout()
-        family_layout.setRowWrapPolicy(QFormLayout.DontWrapRows)  # Keep labels and fields on same line
+        family_layout.setRowWrapPolicy(QFormLayout.DontWrapRows)
         family_layout.setLabelAlignment(Qt.AlignRight)
-        family_layout.setFieldGrowthPolicy(QFormLayout.FieldsStayAtSizeHint)  # Prevent fields from expanding
+        family_layout.setFieldGrowthPolicy(QFormLayout.FieldsStayAtSizeHint)
 
+        self.family_size_label = QLabel("حجم الأسرة:")
         self.family_size_spin = QSpinBox()
         self.family_size_spin.setRange(2, 20)
         self.family_size_spin.setFixedWidth(325)
         self.family_size_spin.setFixedHeight(40)
         self.family_size_spin.setAlignment(Qt.AlignRight)
         self.family_size_spin.wheelEvent = lambda event: event.ignore()
-        family_layout.addRow(QLabel("حجم الأسرة:"), self.family_size_spin)
+        family_layout.addRow(self.family_size_label, self.family_size_spin)
 
+        self.siblings_count_label = QLabel("عدد الإخوة:")
         self.siblings_count_spin = QSpinBox()
         self.siblings_count_spin.setRange(0, 19)
         self.siblings_count_spin.setFixedWidth(325)
         self.siblings_count_spin.setFixedHeight(40)
         self.siblings_count_spin.setAlignment(Qt.AlignRight)
         self.siblings_count_spin.wheelEvent = lambda event: event.ignore()
-        family_layout.addRow(QLabel("عدد الإخوة:"), self.siblings_count_spin)
+        family_layout.addRow(self.siblings_count_label, self.siblings_count_spin)
 
+        self.child_order_label = QLabel("ترتيب الحالة بين الأخوة:")
         self.child_order_spin = QSpinBox()
         self.child_order_spin.setRange(1, 20)
         self.child_order_spin.setFixedWidth(325)
         self.child_order_spin.setFixedHeight(40)
         self.child_order_spin.setAlignment(Qt.AlignRight)
         self.child_order_spin.wheelEvent = lambda event: event.ignore()
-        family_layout.addRow(QLabel("ترتيب الحالة بين الأخوة:"), self.child_order_spin)
+        family_layout.addRow(self.child_order_label, self.child_order_spin)
 
+        self.similar_cases_label = QLabel("حالات مشابهة في العائلة؟")
         self.similar_cases_combo = QComboBox()
         self.similar_cases_combo.addItems(["نعم", "لا"])
         self.similar_cases_combo.currentIndexChanged.connect(self.toggle_similar_cases_who)
         self.similar_cases_combo.setFixedWidth(325)
         self.similar_cases_combo.setFixedHeight(40)
         self.similar_cases_combo.wheelEvent = lambda event: event.ignore()
-        family_layout.addRow(QLabel("حالات مشابهة في العائلة؟"), self.similar_cases_combo)
+        family_layout.addRow(self.similar_cases_label, self.similar_cases_combo)
 
         self.similar_cases_who_label = QLabel("من؟")
         self.similar_cases_who_edit = QLineEdit()
@@ -404,6 +430,10 @@ class CaseForm(QDialog):
         self.similar_cases_who_label.setVisible(has_similar)
         self.similar_cases_who_edit.setVisible(has_similar)
 
+    def label_key(self, label_widget):
+        """Return label text without trailing colon."""
+        return label_widget.text().replace(":", "").strip()
+
     def collect_data_from_form(self):
         """Collects all data from the form fields into a dictionary."""
         # Extract father and mother ages from labels (removing the "سنة" suffix)
@@ -421,104 +451,182 @@ class CaseForm(QDialog):
             mother_age = 0
             
         return {
-            "child_name": self.child_name_edit.text().strip(),
-            "dob": self.dob_edit.date().toString("yyyy-MM-dd"),
-            "age": self.age_label.text(),
-            "gender": self.gender_combo.currentText(),
-            "first_language": self.first_lang_edit.currentText(),
-            "first_language_notes": self.first_lang_notes.text().strip(),
-            "second_language": self.second_lang_edit.currentText(),
-            "second_language_notes": self.second_lang_notes.text().strip(),
-            "diagnosis": self.diagnosis_edit.text().strip(),
-            "diagnosed_by": self.diagnosed_by_edit.text().strip(),
-            
-            "father_name": self.father_name_edit.text().strip(),
-            "father_dob": self.father_dob_edit.date().toString("yyyy-MM-dd"),
-            "father_age": father_age,
-            "father_job": self.father_job_edit.text().strip(),
-            "father_health": self.father_health_edit.text().strip(),
-            
-            "mother_name": self.mother_name_edit.text().strip(),
-            "mother_dob": self.mother_dob_edit.date().toString("yyyy-MM-dd"),
-            "mother_age": mother_age,
-            "mother_job": self.mother_job_edit.text().strip(),
-            "mother_health": self.mother_health_edit.text().strip(),
-            
-            "father_preg_age": self.father_preg_age_label.text(),
-            "mother_preg_age": self.mother_preg_age_label.text(),
-            
-            "parents_relation": self.parents_relation_combo.currentText(),
-            "relation_degree": self.relation_degree_edit.currentText() if self.relation_degree_edit.isVisible() else "",
-            
-            "family_size": self.family_size_spin.value(),
-            "siblings_count": self.siblings_count_spin.value(),
-            "child_order": self.child_order_spin.value(),
-            
-            "similar_cases_family": self.similar_cases_combo.currentText(),
-            "similar_cases_who": self.similar_cases_who_edit.text().strip() if self.similar_cases_who_edit.isVisible() else "",
+            "child_name": {
+                "ar_key": self.label_key(self.child_name_label),
+                "value": self.child_name_edit.text().strip()
+            },
+            "dob": {
+                "ar_key": self.label_key(self.dob_label),
+                "value": self.dob_edit.date().toString("yyyy-MM-dd")
+            },
+            "age": {
+                "ar_key": self.label_key(self.age_text_label),
+                "value": self.age_label.text()
+            },
+            "gender": {
+                "ar_key": self.label_key(self.gender_label),
+                "value": self.gender_combo.currentText()
+            },
+            "first_language": {
+                "ar_key": self.label_key(self.first_lang_label),
+                "value": self.first_lang_edit.currentText()
+            },
+            "first_language_notes": {
+                "ar_key": self.label_key(self.first_lang_notes_label),
+                "value": self.first_lang_notes.text().strip()
+            },
+            "second_language": {
+                "ar_key": self.label_key(self.second_lang_label),
+                "value": self.second_lang_edit.currentText()
+            },
+            "second_language_notes": {
+                "ar_key": self.label_key(self.second_lang_notes_label),
+                "value": self.second_lang_notes.text().strip()
+            },
+            "diagnosis": {
+                "ar_key": self.label_key(self.diagnosis_label),
+                "value": self.diagnosis_edit.text().strip()
+            },
+            "diagnosed_by": {
+                "ar_key": self.label_key(self.diagnosed_by_label),
+                "value": self.diagnosed_by_edit.text().strip()
+            },
+            "father_name": {
+                "ar_key": self.label_key(self.father_name_label),
+                "value": self.father_name_edit.text().strip()
+            },
+            "father_dob": {
+                "ar_key": self.label_key(self.father_dob_label),
+                "value": self.father_dob_edit.date().toString("yyyy-MM-dd")
+            },
+            "father_age": {
+                "ar_key": self.label_key(self.father_age_text_label),
+                "value": self.father_age_label.text()
+            },
+            "father_job": {
+                "ar_key": self.label_key(self.father_job_label),
+                "value": self.father_job_edit.text().strip()
+            },
+            "father_health": {
+                "ar_key": self.label_key(self.father_health_label),
+                "value": self.father_health_edit.text().strip()
+            },
+            "mother_name": {
+                "ar_key": self.label_key(self.mother_name_label),
+                "value": self.mother_name_edit.text().strip()
+            },
+            "mother_dob": {
+                "ar_key": self.label_key(self.mother_dob_label),
+                "value": self.mother_dob_edit.date().toString("yyyy-MM-dd")
+            },
+            "mother_age": {
+                "ar_key": self.label_key(self.mother_age_text_label),
+                "value": self.mother_age_label.text()
+            },
+            "mother_job": {
+                "ar_key": self.label_key(self.mother_job_label),
+                "value": self.mother_job_edit.text().strip()
+            },
+            "mother_health": {
+                "ar_key": self.label_key(self.mother_health_label),
+                "value": self.mother_health_edit.text().strip()
+            },
+            "father_preg_age": {
+                "ar_key": self.label_key(self.father_preg_age_text_label),
+                "value": self.father_preg_age_label.text()
+            },
+            "mother_preg_age": {
+                "ar_key": self.label_key(self.mother_preg_age_text_label),
+                "value": self.mother_preg_age_label.text()
+            },
+            "parents_relation": {
+                "ar_key": self.label_key(self.parents_relation_label),
+                "value": self.parents_relation_combo.currentText()
+            },
+            "relation_degree": {
+                "ar_key": self.label_key(self.relation_degree_label),
+                "value": self.relation_degree_edit.currentText() if self.relation_degree_edit.isVisible() else ""
+            },
+            "family_size": {
+                "ar_key": self.label_key(self.family_size_label),
+                "value": self.family_size_spin.value()
+            },
+            "siblings_count": {
+                "ar_key": self.label_key(self.siblings_count_label),
+                "value": self.siblings_count_spin.value()
+            },
+            "child_order": {
+                "ar_key": self.label_key(self.child_order_label),
+                "value": self.child_order_spin.value()
+            },
+            "similar_cases_family": {
+                "ar_key": self.label_key(self.similar_cases_label),
+                "value": self.similar_cases_combo.currentText()
+            },
+            "similar_cases_who": {
+                "ar_key": self.label_key(self.similar_cases_who_label),
+                "value": self.similar_cases_who_edit.text().strip() if self.similar_cases_who_edit.isVisible() else ""
+            }
         }
 
     def load_data_into_form(self, data):
         """Populates the form fields with the given data dictionary."""
         self._updating_fields = True
-        
-        self.child_name_edit.setText(data.get("child_name", ""))
-        dob_date = QDate.fromString(data.get("dob", ""), "yyyy-MM-dd")
+
+        # Child section
+        self.child_name_edit.setText(data.get("child_name", {}).get("value", ""))
+        dob_date = QDate.fromString(data.get("dob", {}).get("value", ""), "yyyy-MM-dd")
         if dob_date.isValid():
             self.dob_edit.setDate(dob_date)
             self.day_edit.setText("{:02}".format(dob_date.day()))
             self.month_edit.setText("{:02}".format(dob_date.month()))
             self.year_edit.setText("{:02}".format(dob_date.year()))
-            
-        self.gender_combo.setCurrentText(data.get("gender", ""))
-        self.first_lang_edit.setCurrentText(data.get("first_language", ""))
-        self.first_lang_notes.setText(data.get("first_language_notes", ""))
-        self.second_lang_edit.setCurrentText(data.get("second_language", ""))
-        self.second_lang_notes.setText(data.get("second_language_notes", ""))
-        self.diagnosis_edit.setText(data.get("diagnosis", ""))
-        self.diagnosed_by_edit.setText(data.get("diagnosed_by", ""))
+        self.gender_combo.setCurrentText(data.get("gender", {}).get("value", ""))
+        self.first_lang_edit.setCurrentText(data.get("first_language", {}).get("value", ""))
+        self.first_lang_notes.setText(data.get("first_language_notes", {}).get("value", ""))
+        self.second_lang_edit.setCurrentText(data.get("second_language", {}).get("value", ""))
+        self.second_lang_notes.setText(data.get("second_language_notes", {}).get("value", ""))
+        self.diagnosis_edit.setText(data.get("diagnosis", {}).get("value", ""))
+        self.diagnosed_by_edit.setText(data.get("diagnosed_by", {}).get("value", ""))
 
-        self.father_name_edit.setText(data.get("father_name", ""))
-        
-        # Load father DOB if available
-        father_dob_date = QDate.fromString(data.get("father_dob", ""), "yyyy-MM-dd")
+        # Father section
+        self.father_name_edit.setText(data.get("father_name", {}).get("value", ""))
+        father_dob_date = QDate.fromString(data.get("father_dob", {}).get("value", ""), "yyyy-MM-dd")
         if father_dob_date.isValid():
             self.father_dob_edit.setDate(father_dob_date)
             self.father_day_edit.setText("{:02}".format(father_dob_date.day()))
             self.father_month_edit.setText("{:02}".format(father_dob_date.month()))
-            self.father_year_edit.setText("{:02}".format(father_dob_date.year()))            
-        
-        self.father_job_edit.setText(data.get("father_job", ""))
-        self.father_health_edit.setText(data.get("father_health", ""))
+            self.father_year_edit.setText("{:02}".format(father_dob_date.year()))
+        self.father_job_edit.setText(data.get("father_job", {}).get("value", ""))
+        self.father_health_edit.setText(data.get("father_health", {}).get("value", ""))
 
-        self.mother_name_edit.setText(data.get("mother_name", ""))
-        
-        # Load mother DOB if available
-        mother_dob_date = QDate.fromString(data.get("mother_dob", ""), "yyyy-MM-dd")
+        # Mother section
+        self.mother_name_edit.setText(data.get("mother_name", {}).get("value", ""))
+        mother_dob_date = QDate.fromString(data.get("mother_dob", {}).get("value", ""), "yyyy-MM-dd")
         if mother_dob_date.isValid():
             self.mother_dob_edit.setDate(mother_dob_date)
             self.mother_day_edit.setText("{:02}".format(mother_dob_date.day()))
             self.mother_month_edit.setText("{:02}".format(mother_dob_date.month()))
-            self.mother_year_edit.setText("{:02}".format(mother_dob_date.year()))    
+            self.mother_year_edit.setText("{:02}".format(mother_dob_date.year()))
+        self.mother_job_edit.setText(data.get("mother_job", {}).get("value", ""))
+        self.mother_health_edit.setText(data.get("mother_health", {}).get("value", ""))
 
-        self.mother_job_edit.setText(data.get("mother_job", ""))
-        self.mother_health_edit.setText(data.get("mother_health", ""))
+        # Parents relation
+        self.parents_relation_combo.setCurrentText(data.get("parents_relation", {}).get("value", ""))
+        if data.get("relation_degree", {}).get("value", ""):
+            self.relation_degree_edit.setCurrentText(data.get("relation_degree", {}).get("value", ""))
+        self.toggle_relation_degree(self.parents_relation_combo.currentIndex())
 
-        self.parents_relation_combo.setCurrentText(data.get("parents_relation", ""))
-        if data.get("relation_degree"):
-            self.relation_degree_edit.setCurrentText(data.get("relation_degree", ""))
-        self.toggle_relation_degree(self.parents_relation_combo.currentIndex()) # Ensure visibility is correct
+        # Family info
+        self.family_size_spin.setValue(data.get("family_size", {}).get("value", 0))
+        self.siblings_count_spin.setValue(data.get("siblings_count", {}).get("value", 0))
+        self.child_order_spin.setValue(data.get("child_order", {}).get("value", 0))
+        self.similar_cases_combo.setCurrentText(data.get("similar_cases_family", {}).get("value", ""))
+        self.similar_cases_who_edit.setText(data.get("similar_cases_who", {}).get("value", ""))
+        self.toggle_similar_cases_who(self.similar_cases_combo.currentIndex())
 
-        self.family_size_spin.setValue(data.get("family_size", 0))
-        self.siblings_count_spin.setValue(data.get("siblings_count", 0))
-        self.child_order_spin.setValue(data.get("child_order", 0))
-
-        self.similar_cases_combo.setCurrentText(data.get("similar_cases_family", ""))
-        self.similar_cases_who_edit.setText(data.get("similar_cases_who", ""))
-        self.toggle_similar_cases_who(self.similar_cases_combo.currentIndex()) # Ensure visibility is correct
-        
         self._updating_fields = False
-        
+
         # Recalculate all ages based on loaded data
         self.calculate_father_age()
         self.calculate_mother_age()

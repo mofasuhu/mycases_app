@@ -18,13 +18,18 @@ try:
 except ImportError:
     ARABIC_SUPPORT = False
 
+
+
 # Register fonts for Arabic support
 def register_fonts():
-    pdfmetrics.registerFont(TTFont('MyNoto', 'I:/Docs/WORK/python/Refaat/Important_Updated_Scripts/my/free/Case_Follow-Up/mycases_app/fonts/NotoNaskhArabic-Regular.ttf'))
-    pdfmetrics.registerFont(TTFont('MyNotoBold', 'I:/Docs/WORK/python/Refaat/Important_Updated_Scripts/my/free/Case_Follow-Up/mycases_app/fonts/NotoNaskhArabic-Bold.ttf'))    
-    pdfmetrics.registerFont(TTFont('NotoSerif', 'I:/Docs/WORK/python/Refaat/Important_Updated_Scripts/my/free/Case_Follow-Up/mycases_app/fonts/NotoSerif-Regular.ttf'))
-    pdfmetrics.registerFont(TTFont('NotoSerifBold', 'I:/Docs/WORK/python/Refaat/Important_Updated_Scripts/my/free/Case_Follow-Up/mycases_app/fonts/NotoSerif-Bold.ttf'))
-    pdfmetrics.registerFont(TTFont('NotoSerifItalic', 'I:/Docs/WORK/python/Refaat/Important_Updated_Scripts/my/free/Case_Follow-Up/mycases_app/fonts/NotoSerif-Italic.ttf'))
+    font_dir = os.path.join(os.path.dirname(__file__), "..", "fonts")
+    pdfmetrics.registerFont(TTFont('MyNoto', os.path.join(font_dir, "NotoNaskhArabic-Regular.ttf")))
+    pdfmetrics.registerFont(TTFont('MyNotoBold', os.path.join(font_dir, "NotoNaskhArabic-Bold.ttf")))
+
+    pdfmetrics.registerFont(TTFont('NotoSerif', os.path.join(font_dir, "NotoSerif-Regular.ttf")))
+    pdfmetrics.registerFont(TTFont('NotoSerifBold', os.path.join(font_dir, "NotoSerif-Bold.ttf")))
+    pdfmetrics.registerFont(TTFont('NotoSerifItalic', os.path.join(font_dir, "NotoSerif-Italic.ttf")))
+
 
 
 
@@ -44,7 +49,7 @@ def normalize_space(string):
     return str(re.sub(r'\s+', ' ', str(string))).strip()
 
 
-def export_survey_to_pdf_with_custom_path(case_folder_name, survey_data, custom_path, case_data_for_context=None):
+def export_survey_to_pdf_with_custom_path(survey_data, custom_path, case_data_for_context=None):
     try:
         register_fonts()
 
@@ -118,10 +123,10 @@ def export_survey_to_pdf_with_custom_path(case_folder_name, survey_data, custom_
             story.append(Paragraph(pdf_ar_fix("معلومات الحالة"), sectiontitle_style))
             story.append(Spacer(1, 12))
             case_data = [
-                [Paragraph(pdf_ar_fix(case_data_for_context.get("child_name", "-")), cell_style), Paragraph(pdf_ar_fix("اسم الحالة"), cell_style_bold)],
-                [Paragraph(pdf_ar_fix(case_data_for_context.get("dob", "-")), cell_style), Paragraph(pdf_ar_fix("تاريخ الميلاد"), cell_style_bold)],          
-                [Paragraph(pdf_ar_fix(case_data_for_context.get("gender", "-")), cell_style), Paragraph(pdf_ar_fix("الجنس"), cell_style_bold)],           
-                [Paragraph(pdf_ar_fix(case_data_for_context.get("diagnosis", "-")), cell_style), Paragraph(pdf_ar_fix("التشخيص"), cell_style_bold)],
+                [Paragraph(pdf_ar_fix(case_data_for_context.get("child_name", {}).get("value", "-")), cell_style), Paragraph(pdf_ar_fix("اسم الحالة"), cell_style_bold)],
+                [Paragraph(pdf_ar_fix(case_data_for_context.get("dob", {}).get("value", "-")), cell_style), Paragraph(pdf_ar_fix("تاريخ الميلاد"), cell_style_bold)],          
+                [Paragraph(pdf_ar_fix(case_data_for_context.get("gender", {}).get("value", "-")), cell_style), Paragraph(pdf_ar_fix("الجنس"), cell_style_bold)],           
+                [Paragraph(pdf_ar_fix(case_data_for_context.get("diagnosis", {}).get("value", "-")), cell_style), Paragraph(pdf_ar_fix("التشخيص"), cell_style_bold)],
             ]
             table = Table(case_data, colWidths=[doc.width*0.3, doc.width*0.7])
             table.setStyle(TableStyle([
@@ -226,26 +231,71 @@ def export_survey_to_pdf(case_folder_name, survey_data, case_data_for_context=No
 # if __name__ == "__main__":
 #     # --- Sample data for testing ---
 #     case_data_for_context = {
-#         "child_name": "منار محمد عبد الحفيظ",
-#         "dob": "2016-05-22",
-#         "gender": "أنثى",
-#         "diagnosis": "اضطراب طيف التوحد"
+#         "child_name": {
+#             "ar_key": "اسم الحالة",
+#             "value": "منار محمد عبد الحفيظ"
+#         },
+#         "dob": {
+#             "ar_key": "تاريخ الميلاد",
+#             "value": "2018-09-03"
+#         },
+#         "age": {
+#             "ar_key": "العمر",
+#             "value": "6 سنة، 11 شهر، 11 يوم"
+#         },
+#         "gender": {
+#             "ar_key": "الجنس",
+#             "value": "أنثى"
+#         },
+#         "first_language": {
+#             "ar_key": "اللغة الأولى",
+#             "value": "اللغة العربية - مصر"
+#         },
+#         "first_language_notes": {
+#             "ar_key": "ملاحظات اللغة الأولى",
+#             "value": ""
+#         },
+#         "second_language": {
+#             "ar_key": "اللغة الثانية",
+#             "value": "لا يوجد"
+#         },
+#         "second_language_notes": {
+#             "ar_key": "ملاحظات اللغة الثانية",
+#             "value": ""
+#         },
+#         "diagnosis": {
+#             "ar_key": "التشخيص",
+#             "value": "حركي"
+#         }
 #     }
 
 #     survey_data = {
 #         "survey_type": "استبيان التقييم الأول",
 #         "survey_date": "2025-07-10",
+#         "case_id": "8",
+#         "child_name": "منار محمد عبد الحفيظ",
+#         "dob": "2018-09-03",
+#         "gender": "أنثى",
+#         "submission_timestamp": "2025-08-14T12:13:30.611892",
 #         "school_attendance": {
-#             "value": "نعم",
-#             "ar_key": "التحاق بالمدرسة"
+#             "ar_key": "هل يذهب الى (المدرسة \\ الحضانة)",
+#             "value": "نعم"
 #         },
-#         "bathroom_independence": {
-#             "value": "مساعدة كلية",
-#             "ar_key": "يدخل الحمام"
+#         "school_year": {
+#             "ar_key": "العام الدراسى",
+#             "value": ""
 #         },
-#         "family_preparedness": {
-#             "value": "جيد",
-#             "ar_key": "مدى تقبل الأسرة للاضطراب واستعدادها للمشاركة في التأهيل"
+#         "school_duration": {
+#             "ar_key": "المدى التى قضاها",
+#             "value": ""
+#         },
+#         "school_type": {
+#             "ar_key": "نوعها",
+#             "value": ""
+#         },
+#         "school_discontinue": {
+#             "ar_key": "سبب عدم الاستمرار",
+#             "value": ""
 #         }
 #     }
 

@@ -1,0 +1,119 @@
+{
+    "child_name": {
+        "ar_key": "اسم الحالة",
+        "value": "منار محمد عبد الحفيظ"
+    },
+    "dob": {
+        "ar_key": "تاريخ الميلاد",
+        "value": "2015-09-03"
+    },
+    "age": {
+        "ar_key": "العمر",
+        "value": "9 سنة، 11 شهر، 11 يوم"
+    },
+    "gender": {
+        "ar_key": "الجنس",
+        "value": "أنثى"
+    },
+    "first_language": {
+        "ar_key": "اللغة الأولى",
+        "value": "اللغة العربية - مصر"
+    },
+    "first_language_notes": {
+        "ar_key": "ملاحظات اللغة الأولى",
+        "value": ""
+    },
+    "second_language": {
+        "ar_key": "اللغة الثانية",
+        "value": "لا يوجد"
+    },
+    "second_language_notes": {
+        "ar_key": "ملاحظات اللغة الثانية",
+        "value": ""
+    },
+    "diagnosis": {
+        "ar_key": "التشخيص",
+        "value": "حركي"
+    },
+    "diagnosed_by": {
+        "ar_key": "بواسطة",
+        "value": "مركز نور"
+    },
+    "father_name": {
+        "ar_key": "اسم الأب",
+        "value": "محمد عبد الحفيظ فايز"
+    },
+    "father_dob": {
+        "ar_key": "تاريخ ميلاد الأب",
+        "value": "1990-11-10"
+    },
+    "father_age": {
+        "ar_key": "عمر الأب",
+        "value": "34 سنة، 9 شهر"
+    },
+    "father_job": {
+        "ar_key": "وظيفة الأب",
+        "value": "مهندس ميكانيكا"
+    },
+    "father_health": {
+        "ar_key": "الحالة الصحية للأب",
+        "value": "سليم"
+    },
+    "mother_name": {
+        "ar_key": "اسم الأم",
+        "value": "ميادة محمد مصطفى"
+    },
+    "mother_dob": {
+        "ar_key": "تاريخ ميلاد الأم",
+        "value": "1990-12-12"
+    },
+    "mother_age": {
+        "ar_key": "عمر الأم",
+        "value": "34 سنة، 8 شهر"
+    },
+    "mother_job": {
+        "ar_key": "وظيفة الأم",
+        "value": "طبيبة أطفال"
+    },
+    "mother_health": {
+        "ar_key": "الحالة الصحية للأم",
+        "value": "سليمة"
+    },
+    "father_preg_age": {
+        "ar_key": "عمر الأب عند الولادة",
+        "value": "24 سنة، 9 شهر"
+    },
+    "mother_preg_age": {
+        "ar_key": "عمر الأم عند الولادة",
+        "value": "24 سنة، 8 شهر"
+    },
+    "parents_relation": {
+        "ar_key": "صلة قرابة بين الوالدين؟",
+        "value": "نعم"
+    },
+    "relation_degree": {
+        "ar_key": "درجة القرابة",
+        "value": "أبناء عم/خال من الدرجة الأولى"
+    },
+    "family_size": {
+        "ar_key": "حجم الأسرة",
+        "value": 4
+    },
+    "siblings_count": {
+        "ar_key": "عدد الإخوة",
+        "value": 1
+    },
+    "child_order": {
+        "ar_key": "ترتيب الحالة بين الأخوة",
+        "value": 1
+    },
+    "similar_cases_family": {
+        "ar_key": "حالات مشابهة في العائلة؟",
+        "value": "نعم"
+    },
+    "similar_cases_who": {
+        "ar_key": "من؟",
+        "value": "الأخت الصغرى"
+    },
+    "case_id": "8"
+}

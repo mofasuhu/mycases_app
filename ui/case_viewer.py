@@ -1,4 +1,5 @@
 import json
+from datetime import datetime
 from PyQt5.QtWidgets import (
     QDialog, QFormLayout, QLabel, QScrollArea, QPushButton, 
     QVBoxLayout, QHBoxLayout, QGroupBox, QMessageBox, QWidget,
@@ -87,25 +88,15 @@ class SurveyDetailViewer(QDialog):
         """Export the survey data to a PDF file with a file dialog for selecting the save path."""
         # Get case data for context
         case_data = load_case_data_from_json(self.case_folder_name)
-        
-        # Create a file dialog to select the save path
-        options = QFileDialog.Options()
-        options |= QFileDialog.DontUseNativeDialog
-        
+
         # Generate a default filename
         survey_type = self.survey_data.get("survey_type", "استبيان")
         survey_date = self.survey_data.get("survey_date", "").replace("-", "")
-        child_name = case_data.get("child_name", "حالة") if case_data else "حالة"
+        child_name = case_data.get("child_name", {}).get("value", "حالة") if case_data else "حالة"
         default_filename = f"{survey_type}_{child_name}_{survey_date}.pdf"
-        
-        # Open file dialog
-        file_path, _ = QFileDialog.getSaveFileName(
-            self, 
-            "حفظ ملف PDF", 
-            default_filename,
-            "PDF Files (*.pdf)", 
-            options=options
-        )
+
+
+        file_path, _ = QFileDialog.getSaveFileName(self, "حفظ الملف", default_filename, "PDF Files (*.pdf)")
         
         if file_path:
             # Ensure the file has .pdf extension
@@ -114,7 +105,6 @@ class SurveyDetailViewer(QDialog):
                 
             # Export the survey to PDF
             success, message = export_survey_to_pdf_with_custom_path(
-                self.case_folder_name, 
                 self.survey_data, 
                 file_path, 
                 case_data_for_context=case_data
@@ -133,7 +123,7 @@ class CaseViewer(QDialog):
         self.parent_main_window = parent # To call refresh on main window if needed
 
         # --- Window Properties ---
-        child_name_display = self.case_data.get("child_name", "")
+        child_name_display = self.case_data.get("child_name", {}).get("value", "")
         self.setWindowTitle(f"عرض بيانات: {child_name_display}")
         self.setGeometry(250, 50, 800, 600)
         # Add minimize and maximize buttons to the window
@@ -154,12 +144,12 @@ class CaseViewer(QDialog):
         child_layout.setLabelAlignment(Qt.AlignRight)
         child_layout.setFieldGrowthPolicy(QFormLayout.FieldsStayAtSizeHint)  # Prevent fields from expanding
 
-        self.child_name_label = QLabel(self.case_data.get("child_name", "-"))
+        self.child_name_label = QLabel(self.case_data.get("child_name", {}).get("value", "-"))
         self.child_name_label.setFixedWidth(325)
         self.child_name_label.setFixedHeight(40)        
         child_layout.addRow(QLabel("اسم الحالة:"), self.child_name_label)
 
-        self.dob_label = QLabel(self.case_data.get("dob", "-"))
+        self.dob_label = QLabel(self.case_data.get("dob", {}).get("value", "-"))
         self.dob_label.setFixedWidth(325)
         self.dob_label.setFixedHeight(40)
         self.dob_label.setAlignment(Qt.AlignRight)
@@ -168,37 +158,37 @@ class CaseViewer(QDialog):
         self.age_label = QLabel("يتم حسابه")
         child_layout.addRow(QLabel("العمر:"), self.age_label)
 
-        self.gender_label = QLabel(self.case_data.get("gender", "-"))
+        self.gender_label = QLabel(self.case_data.get("gender", {}).get("value", "-"))
         self.gender_label.setFixedWidth(325)
         self.gender_label.setFixedHeight(40)
         child_layout.addRow(QLabel("الجنس:"), self.gender_label)
 
-        self.first_lang_label = QLabel(self.case_data.get("first_language", "-"))
+        self.first_lang_label = QLabel(self.case_data.get("first_language", {}).get("value", "-"))
         self.first_lang_label.setFixedWidth(325)
         self.first_lang_label.setFixedHeight(40)
         child_layout.addRow(QLabel("اللغة الأولى:"), self.first_lang_label)
 
-        self.first_lang_notes_label = QLabel(self.case_data.get("first_language_notes", "-"))
+        self.first_lang_notes_label = QLabel(self.case_data.get("first_language_notes", {}).get("value", "-"))
         self.first_lang_notes_label.setFixedWidth(325)
         self.first_lang_notes_label.setFixedHeight(40)
         child_layout.addRow(QLabel("ملاحظات اللغة الأولى:"), self.first_lang_notes_label)
 
-        self.second_lang_label = QLabel(self.case_data.get("second_language", "-"))
+        self.second_lang_label = QLabel(self.case_data.get("second_language", {}).get("value", "-"))
         self.second_lang_label.setFixedWidth(325)
         self.second_lang_label.setFixedHeight(40)
         child_layout.addRow(QLabel("اللغة الثانية:"), self.second_lang_label)
 
-        self.second_lang_notes_label = QLabel(self.case_data.get("second_language_notes", "-"))
+        self.second_lang_notes_label = QLabel(self.case_data.get("second_language_notes", {}).get("value", "-"))
         self.second_lang_notes_label.setFixedWidth(325)
         self.second_lang_notes_label.setFixedHeight(40)
         child_layout.addRow(QLabel("ملاحظات اللغة الثانية:"), self.second_lang_notes_label)
 
-        self.diagnosis_label = QLabel(self.case_data.get("diagnosis", "-"))
+        self.diagnosis_label = QLabel(self.case_data.get("diagnosis", {}).get("value", "-"))
         self.diagnosis_label.setFixedWidth(325)
         self.diagnosis_label.setFixedHeight(40)
         child_layout.addRow(QLabel("التشخيص:"), self.diagnosis_label)
 
-        self.diagnosed_by_label = QLabel(self.case_data.get("diagnosed_by", "-"))
+        self.diagnosed_by_label = QLabel(self.case_data.get("diagnosed_by", {}).get("value", "-"))
         self.diagnosed_by_label.setFixedWidth(325)
         self.diagnosed_by_label.setFixedHeight(40)
         child_layout.addRow(QLabel("بواسطة:"), self.diagnosed_by_label)
@@ -213,12 +203,12 @@ class CaseViewer(QDialog):
         parents_layout.setLabelAlignment(Qt.AlignRight)
         parents_layout.setFieldGrowthPolicy(QFormLayout.FieldsStayAtSizeHint)  # Prevent fields from expanding
 
-        self.father_name_label = QLabel(self.case_data.get("father_name", "-"))
+        self.father_name_label = QLabel(self.case_data.get("father_name", {}).get("value", "-"))
         self.father_name_label.setFixedWidth(325)
         self.father_name_label.setFixedHeight(40)
         parents_layout.addRow(QLabel("اسم الأب:"), self.father_name_label)
         
-        self.father_dob_label = QLabel(self.case_data.get("father_dob", "-"))
+        self.father_dob_label = QLabel(self.case_data.get("father_dob", {}).get("value", "-"))
         self.father_dob_label.setFixedWidth(325)
         self.father_dob_label.setFixedHeight(40)
         self.father_dob_label.setAlignment(Qt.AlignRight)
@@ -227,22 +217,22 @@ class CaseViewer(QDialog):
         self.father_age_label = QLabel("يتم حسابه")
         parents_layout.addRow(QLabel("عمر الأب:"), self.father_age_label)
         
-        self.father_job_label = QLabel(self.case_data.get("father_job", "-"))
+        self.father_job_label = QLabel(self.case_data.get("father_job", {}).get("value", "-"))
         self.father_job_label.setFixedWidth(325)
         self.father_job_label.setFixedHeight(40)
         parents_layout.addRow(QLabel("وظيفة الأب:"), self.father_job_label)
         
-        self.father_health_label = QLabel(self.case_data.get("father_health", "-"))
+        self.father_health_label = QLabel(self.case_data.get("father_health", {}).get("value", "-"))
         self.father_health_label.setFixedWidth(325)
         self.father_health_label.setFixedHeight(40)
         parents_layout.addRow(QLabel("الحالة الصحية للأب:"), self.father_health_label)
 
-        self.mother_name_label = QLabel(self.case_data.get("mother_name", "-"))
+        self.mother_name_label = QLabel(self.case_data.get("mother_name", {}).get("value", "-"))
         self.mother_name_label.setFixedWidth(325)
         self.mother_name_label.setFixedHeight(40)
         parents_layout.addRow(QLabel("اسم الأم:"), self.mother_name_label)
         
-        self.mother_dob_label = QLabel(self.case_data.get("mother_dob", "-"))
+        self.mother_dob_label = QLabel(self.case_data.get("mother_dob", {}).get("value", "-"))
         self.mother_dob_label.setFixedWidth(325)
         self.mother_dob_label.setFixedHeight(40)
         self.mother_dob_label.setAlignment(Qt.AlignRight)
@@ -251,12 +241,12 @@ class CaseViewer(QDialog):
         self.mother_age_label = QLabel("يتم حسابه")
         parents_layout.addRow(QLabel("عمر الأم:"), self.mother_age_label)
         
-        self.mother_job_label = QLabel(self.case_data.get("mother_job", "-"))
+        self.mother_job_label = QLabel(self.case_data.get("mother_job", {}).get("value", "-"))
         self.mother_job_label.setFixedWidth(325)
         self.mother_job_label.setFixedHeight(40)
         parents_layout.addRow(QLabel("وظيفة الأم:"), self.mother_job_label)
         
-        self.mother_health_label = QLabel(self.case_data.get("mother_health", "-"))
+        self.mother_health_label = QLabel(self.case_data.get("mother_health", {}).get("value", "-"))
         self.mother_health_label.setFixedWidth(325)
         self.mother_health_label.setFixedHeight(40)
         parents_layout.addRow(QLabel("الحالة الصحية للأم:"), self.mother_health_label)
@@ -267,15 +257,15 @@ class CaseViewer(QDialog):
         self.mother_preg_age_label = QLabel("يتم حسابه")
         parents_layout.addRow(QLabel("عمر الأم عند الولادة:"), self.mother_preg_age_label)
 
-        self.parents_relation_label = QLabel(self.case_data.get("parents_relation", "-"))
+        self.parents_relation_label = QLabel(self.case_data.get("parents_relation", {}).get("value", "-"))
         self.parents_relation_label.setFixedWidth(325)
         self.parents_relation_label.setFixedHeight(40)
         parents_layout.addRow(QLabel("صلة قرابة بين الوالدين؟"), self.parents_relation_label)
 
         # Only show relation degree if parents are related
-        if self.case_data.get("parents_relation") == "نعم":
+        if self.case_data.get("parents_relation", {}).get("value", "") == "نعم":
             self.relation_degree_label = QLabel("درجة القرابة:")
-            self.relation_degree_value = QLabel(self.case_data.get("relation_degree", "-"))
+            self.relation_degree_value = QLabel(self.case_data.get("relation_degree", {}).get("value", "-"))
             self.relation_degree_value.setFixedWidth(325)
             self.relation_degree_value.setFixedHeight(40)
             parents_layout.addRow(self.relation_degree_label, self.relation_degree_value)
@@ -290,33 +280,33 @@ class CaseViewer(QDialog):
         family_layout.setLabelAlignment(Qt.AlignRight)
         family_layout.setFieldGrowthPolicy(QFormLayout.FieldsStayAtSizeHint)  # Prevent fields from expanding
 
-        self.family_size_label = QLabel(str(self.case_data.get("family_size", "-")))
+        self.family_size_label = QLabel(str(self.case_data.get("family_size", {}).get("value", "-")))
         self.family_size_label.setFixedWidth(325)
         self.family_size_label.setFixedHeight(40)
         self.family_size_label.setAlignment(Qt.AlignRight)
         family_layout.addRow(QLabel("حجم الأسرة:"), self.family_size_label)
 
-        self.siblings_count_label = QLabel(str(self.case_data.get("siblings_count", "-")))
+        self.siblings_count_label = QLabel(str(self.case_data.get("siblings_count", {}).get("value", "-")))
         self.siblings_count_label.setFixedWidth(325)
         self.siblings_count_label.setFixedHeight(40)
         self.siblings_count_label.setAlignment(Qt.AlignRight)
         family_layout.addRow(QLabel("عدد الإخوة:"), self.siblings_count_label)
 
-        self.child_order_label = QLabel(str(self.case_data.get("child_order", "-")))
+        self.child_order_label = QLabel(str(self.case_data.get("child_order", {}).get("value", "-")))
         self.child_order_label.setFixedWidth(325)
         self.child_order_label.setFixedHeight(40)
         self.child_order_label.setAlignment(Qt.AlignRight)
         family_layout.addRow(QLabel("ترتيب الحالة بين الأخوة:"), self.child_order_label)
 
-        self.similar_cases_label = QLabel(self.case_data.get("similar_cases_family", "-"))
+        self.similar_cases_label = QLabel(self.case_data.get("similar_cases_family", {}).get("value", "-"))
         self.similar_cases_label.setFixedWidth(325)
         self.similar_cases_label.setFixedHeight(40)
         family_layout.addRow(QLabel("حالات مشابهة في العائلة؟"), self.similar_cases_label)
 
         # Only show similar cases who if there are similar cases
-        if self.case_data.get("similar_cases_family") == "نعم":
+        if self.case_data.get("similar_cases_family", {}).get("value", "") == "نعم":
             self.similar_cases_who_label = QLabel("من؟")
-            self.similar_cases_who_value = QLabel(self.case_data.get("similar_cases_who", "-"))
+            self.similar_cases_who_value = QLabel(self.case_data.get("similar_cases_who", {}).get("value", "-"))
             self.similar_cases_who_value.setFixedWidth(325)
             self.similar_cases_who_value.setFixedHeight(40)
             family_layout.addRow(self.similar_cases_who_label, self.similar_cases_who_value)
@@ -325,7 +315,18 @@ class CaseViewer(QDialog):
         self.main_layout.addWidget(family_group)
 
 
-        # --- Buttons (Edit, Close) ---
+
+        # --- Buttons (Export Full Case, Edit, Close) ---
+        self.button_box = QHBoxLayout()
+
+        # Export full case button
+        self.export_full_case_button = QPushButton()
+        self.export_full_case_button.setIcon(QIcon("icons/export.png"))  # choose your icon
+        self.export_full_case_button.setIconSize(QSize(32, 32))
+        self.export_full_case_button.setToolTip("تصدير بيانات الحالة وكافة الاستبيانات إلى PDF")
+        self.export_full_case_button.clicked.connect(self.export_full_case_to_pdf)
+
+
         self.button_box = QHBoxLayout()
 
         self.edit_button = QPushButton()
@@ -341,6 +342,7 @@ class CaseViewer(QDialog):
         self.close_button.clicked.connect(self.reject)
 
         self.button_box.addStretch()
+        self.button_box.addWidget(self.export_full_case_button)
         self.button_box.addWidget(self.edit_button)
         self.button_box.addWidget(self.close_button)
         self.main_layout.addLayout(self.button_box)
@@ -377,7 +379,7 @@ class CaseViewer(QDialog):
 
     def calculate_age(self):
         """Calculate child's age based on DOB and update the age label"""
-        dob_str = self.case_data.get("dob", "")
+        dob_str = self.case_data.get("dob", {}).get("value", "")
         if not dob_str:
             self.age_label.setText("تاريخ ميلاد غير متوفر")
             return
@@ -409,7 +411,7 @@ class CaseViewer(QDialog):
 
     def calculate_father_age(self):
         """Calculate father's age based on DOB"""
-        father_dob_str = self.case_data.get("father_dob", "")
+        father_dob_str = self.case_data.get("father_dob", {}).get("value", "")
         if not father_dob_str:
             self.father_age_label.setText("-")
             return
@@ -437,7 +439,7 @@ class CaseViewer(QDialog):
 
     def calculate_mother_age(self):
         """Calculate mother's age based on DOB"""
-        mother_dob_str = self.case_data.get("mother_dob", "")
+        mother_dob_str = self.case_data.get("mother_dob", {}).get("value", "")
         if not mother_dob_str:
             self.mother_age_label.setText("-")
             return
@@ -465,7 +467,7 @@ class CaseViewer(QDialog):
 
     def calculate_pregnancy_ages(self):
         """Calculate parents' ages at pregnancy based on child's DOB and parents' DOBs"""
-        child_dob_str = self.case_data.get("dob", "")
+        child_dob_str = self.case_data.get("dob", {}).get("value", "")
         if not child_dob_str:
             self.father_preg_age_label.setText("-")
             self.mother_preg_age_label.setText("-")
@@ -483,7 +485,7 @@ class CaseViewer(QDialog):
             child_dob = date(child_dob_qdate.year(), child_dob_qdate.month(), child_dob_qdate.day())
             
             # Calculate father's age at pregnancy
-            father_dob_str = self.case_data.get("father_dob", "")
+            father_dob_str = self.case_data.get("father_dob", {}).get("value", "")
             if father_dob_str:
                 father_dob_parts = father_dob_str.split("-")
                 if len(father_dob_parts) == 3:
@@ -495,7 +497,7 @@ class CaseViewer(QDialog):
                         self.father_preg_age_label.setText(f"{father_preg_age} سنة، {father_preg_age_months} شهر")
 
             # Calculate mother's age at pregnancy
-            mother_dob_str = self.case_data.get("mother_dob", "")
+            mother_dob_str = self.case_data.get("mother_dob", {}).get("value", "")
             if mother_dob_str:
                 mother_dob_parts = mother_dob_str.split("-")
                 if len(mother_dob_parts) == 3:
@@ -598,35 +600,167 @@ class CaseViewer(QDialog):
     def update_display_with_new_data(self):
         """Update all displayed fields with the new case data"""
         # Update Child Information
-        self.child_name_label.setText(self.case_data.get("child_name", "-"))
-        self.dob_label.setText(self.case_data.get("dob", "-"))
-        self.gender_label.setText(self.case_data.get("gender", "-"))
-        self.first_lang_label.setText(self.case_data.get("first_language", "-"))
-        self.first_lang_notes_label.setText(self.case_data.get("first_language_notes", "-"))
-        self.second_lang_label.setText(self.case_data.get("second_language", "-"))
-        self.second_lang_notes_label.setText(self.case_data.get("second_language_notes", "-"))
-        self.diagnosis_label.setText(self.case_data.get("diagnosis", "-"))
-        self.diagnosed_by_label.setText(self.case_data.get("diagnosed_by", "-"))
+        self.child_name_label.setText(self.case_data.get("child_name", {}).get("value", "-"))
+        self.dob_label.setText(self.case_data.get("dob", {}).get("value", "-"))
+        self.gender_label.setText(self.case_data.get("gender", {}).get("value", "-"))
+        self.first_lang_label.setText(self.case_data.get("first_language", {}).get("value", "-"))
+        self.first_lang_notes_label.setText(self.case_data.get("first_language_notes", {}).get("value", "-"))
+        self.second_lang_label.setText(self.case_data.get("second_language", {}).get("value", "-"))
+        self.second_lang_notes_label.setText(self.case_data.get("second_language_notes", {}).get("value", "-"))
+        self.diagnosis_label.setText(self.case_data.get("diagnosis", {}).get("value", "-"))
+        self.diagnosed_by_label.setText(self.case_data.get("diagnosed_by", {}).get("value", "-"))
         
         # Update Parents Information
-        self.father_name_label.setText(self.case_data.get("father_name", "-"))
-        self.father_dob_label.setText(self.case_data.get("father_dob", "-"))
-        self.father_job_label.setText(self.case_data.get("father_job", "-"))
-        self.father_health_label.setText(self.case_data.get("father_health", "-"))
-        self.mother_name_label.setText(self.case_data.get("mother_name", "-"))
-        self.mother_dob_label.setText(self.case_data.get("mother_dob", "-"))
-        self.mother_job_label.setText(self.case_data.get("mother_job", "-"))
-        self.mother_health_label.setText(self.case_data.get("mother_health", "-"))
-        self.parents_relation_label.setText(self.case_data.get("parents_relation", "-"))
+        self.father_name_label.setText(self.case_data.get("father_name", {}).get("value", "-"))
+        self.father_dob_label.setText(self.case_data.get("father_dob", {}).get("value", "-"))
+        self.father_job_label.setText(self.case_data.get("father_job", {}).get("value", "-"))
+        self.father_health_label.setText(self.case_data.get("father_health", {}).get("value", "-"))
+        self.mother_name_label.setText(self.case_data.get("mother_name", {}).get("value", "-"))
+        self.mother_dob_label.setText(self.case_data.get("mother_dob", {}).get("value", "-"))
+        self.mother_job_label.setText(self.case_data.get("mother_job", {}).get("value", "-"))
+        self.mother_health_label.setText(self.case_data.get("mother_health", {}).get("value", "-"))
+        self.parents_relation_label.setText(self.case_data.get("parents_relation", {}).get("value", "-"))
         
         # Update Family Information
-        self.family_size_label.setText(str(self.case_data.get("family_size", "-")))
-        self.siblings_count_label.setText(str(self.case_data.get("siblings_count", "-")))
-        self.child_order_label.setText(str(self.case_data.get("child_order", "-")))
-        self.similar_cases_label.setText(self.case_data.get("similar_cases_family", "-"))
+        self.family_size_label.setText(str(self.case_data.get("family_size", {}).get("value", "-")))
+        self.siblings_count_label.setText(str(self.case_data.get("siblings_count", {}).get("value", "-")))
+        self.child_order_label.setText(str(self.case_data.get("child_order", {}).get("value", "-")))
+        self.similar_cases_label.setText(self.case_data.get("similar_cases_family", {}).get("value", "-"))
         
         # Recalculate all ages
         self.calculate_all_ages()
 
     def apply_styles(self):
         self.setStyleSheet("""""")
+
+
+    def export_full_case_to_pdf(self):
+        from PyQt5.QtWidgets import QMessageBox
+        import os
+        from PyQt5.QtWidgets import QFileDialog
+        from reportlab.platypus import SimpleDocTemplate, Paragraph, Spacer, Table, TableStyle, PageBreak
+        from reportlab.lib.pagesizes import A4
+        from reportlab.lib import colors
+        from reportlab.lib.styles import ParagraphStyle
+        from reportlab.lib.enums import TA_RIGHT, TA_CENTER
+        from reportlab.pdfbase import pdfmetrics
+        from reportlab.pdfbase.ttfonts import TTFont
+
+        # Try to import Arabic text support libraries
+        try:
+            from bidi.algorithm import get_display
+            import arabic_reshaper
+            ARABIC_SUPPORT = True
+        except ImportError:
+            ARABIC_SUPPORT = False
+
+        def pdf_ar_fix(text):
+            if not ARABIC_SUPPORT:
+                return text
+            
+            try:
+                return get_display(arabic_reshaper.reshape(str(text)))
+            except:
+                return text
+        try:
+            font_dir = os.path.join(os.path.dirname(__file__), "..", "fonts")
+            pdfmetrics.registerFont(TTFont('MyNoto', os.path.join(font_dir, "NotoNaskhArabic-Regular.ttf")))
+            pdfmetrics.registerFont(TTFont('MyNotoBold', os.path.join(font_dir, "NotoNaskhArabic-Bold.ttf")))
+
+
+            ar_font = 'MyNoto'
+            ar_font_bold = 'MyNotoBold'
+
+            cell_style = ParagraphStyle(name='Cell', fontName=ar_font, fontSize=10, alignment=TA_RIGHT, leading=14, wordWrap='RTL')
+            cell_style_bold = ParagraphStyle(name='CellBold', fontName=ar_font_bold, fontSize=10, alignment=TA_RIGHT, leading=14, wordWrap='RTL')
+            header_style = ParagraphStyle(name='Header', fontName=ar_font_bold, fontSize=18, alignment=TA_CENTER, spaceAfter=15, wordWrap='RTL')
+            subheader_style = ParagraphStyle(name='SubHeader',fontName=ar_font,fontSize=10,alignment=TA_RIGHT,spaceAfter=12,wordWrap='RTL')            
+            section_style = ParagraphStyle(name='Section', fontName=ar_font_bold, fontSize=14, alignment=TA_RIGHT, spaceAfter=10, wordWrap='RTL')
+
+            # Ask where to save
+            file_path, _ = QFileDialog.getSaveFileName(self, "حفظ تقرير الحالة", f"{self.case_data.get('child_name', {}).get('value', 'حالة')}.pdf", "PDF Files (*.pdf)")
+            if not file_path:
+                return False, QMessageBox.critical(self, "خطأ في التصدير", f"مسار الملف مفقود!")
+            if not file_path.lower().endswith(".pdf"):
+                file_path += ".pdf"
+
+            # Start document
+            doc = SimpleDocTemplate(file_path, pagesize=A4, rightMargin=30, leftMargin=30, topMargin=40, bottomMargin=30)
+            story = []
+
+            # 1) Case main data
+            story.append(Paragraph(pdf_ar_fix(self.case_data.get("child_name", {}).get("value", "-")), header_style))
+            story.append(Spacer(1, 12))
+            story.append(Paragraph(pdf_ar_fix(f"تاريخ التقرير: {datetime.now().strftime('%Y-%m-%d %H:%M:%S')}"), subheader_style))
+            story.append(Spacer(1, 12))
+
+            story.append(Paragraph(pdf_ar_fix("بيانات الحالة"), section_style))
+
+            case_table_data = [
+                [Paragraph(pdf_ar_fix(self.case_data.get("case_id", "-")), cell_style), Paragraph(pdf_ar_fix("رقم الحالة"), cell_style_bold)]
+            ]
+            
+            skip_fields = ['case_id', 'child_name']
+            for key, value in self.case_data.items():
+                if key not in skip_fields and value:
+                    if isinstance(value, dict):
+                        val = value.get("value", "-")
+                        label = value.get("ar_key", key)
+                    else:
+                        val = value
+                        label = key
+                    case_table_data.append([Paragraph(pdf_ar_fix(str(val)), cell_style), Paragraph(pdf_ar_fix(str(label)), cell_style_bold)])
+
+            table = Table(case_table_data, colWidths=[doc.width*0.4, doc.width*0.6])
+            table.setStyle(TableStyle([
+                ('GRID', (0,0), (-1,-1), 1, colors.white),
+                ('BACKGROUND', (1, 0), (1, -1), colors.whitesmoke),
+            ]))
+            story.append(table)
+            story.append(Spacer(1, 20))
+            story.append(PageBreak())
+
+            # 2) All surveys
+            from utils.file_manager import load_surveys_for_case
+            surveys = load_surveys_for_case(self.case_folder_name)
+
+
+
+            skip_fields = ['survey_type', 'survey_date', 'submission_timestamp', 'case_id', 'child_name', 'dob', 'gender', '_filename']
+            if surveys:
+                for i, survey in enumerate(surveys, 1):
+                    story.append(Paragraph(pdf_ar_fix(f"الاستبيان رقم {i} - {survey.get('survey_type', '-') }"), section_style))
+
+                    survey_table_data = [
+                        [Paragraph(pdf_ar_fix(survey.get("survey_type", "-")), cell_style), Paragraph(pdf_ar_fix("نوع الاستبيان"), cell_style_bold)],
+                        [Paragraph(pdf_ar_fix(survey.get("survey_date", "-")), cell_style), Paragraph(pdf_ar_fix("تاريخ الاستبيان"), cell_style_bold)]
+                    ]
+
+                    for key, value in survey.items():
+                        if key not in skip_fields and value:
+                            if isinstance(value, dict):
+                                val = value.get("value", "-")
+                                label = value.get("ar_key", key)
+                            else:
+                                val = value
+                                label = key
+                            survey_table_data.append([Paragraph(pdf_ar_fix(str(val)), cell_style), Paragraph(pdf_ar_fix(str(label)), cell_style_bold)])
+                    s_table = Table(survey_table_data, colWidths=[doc.width*0.4, doc.width*0.6])
+                    s_table.setStyle(TableStyle([
+                        ('GRID', (0,0), (-1,-1), 1, colors.white),
+                        ('BACKGROUND', (1, 0), (1, -1), colors.whitesmoke),
+                    ]))                    
+                    story.append(s_table)
+                    if i < len(surveys):
+                        story.append(PageBreak())
+
+            # Footer
+            story.append(Spacer(1, 30))
+            story.append(Paragraph(pdf_ar_fix("تم إنشاؤه بواسطة تطبيق MyCases"), ParagraphStyle(name='Footer', fontName=ar_font, fontSize=8, alignment=1)))
+
+            # Build PDF
+            doc.build(story)
+            return True, QMessageBox.information(self, "تم التصدير", "تم تصدير تقرير الحالة بنجاح.")
+
+        except Exception as e:
+            return False, QMessageBox.critical(self, "خطأ في التصدير", f"فشل تصدير تقرير الحالة\n{e}")

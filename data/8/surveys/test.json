@@ -1,0 +1,333 @@
+{
+    "survey_type": "استبيان التقييم الأول",
+    "survey_date": "2025-07-10",
+    "case_id": "8",
+    "child_name": "منار محمد عبد الحفيظ",
+    "dob": "2018-09-03",
+    "gender": "أنثى",
+    "submission_timestamp": "2025-08-14T12:13:30.611892",
+    "school_attendance": {
+        "ar_key": "هل يذهب الى (المدرسة \\ الحضانة)",
+        "value": "نعم"
+    },
+    "school_year": {
+        "ar_key": "العام الدراسى",
+        "value": ""
+    },
+    "school_duration": {
+        "ar_key": "المدى التى قضاها",
+        "value": ""
+    },
+    "school_type": {
+        "ar_key": "نوعها",
+        "value": ""
+    },
+    "school_discontinue": {
+        "ar_key": "سبب عدم الاستمرار",
+        "value": ""
+    },
+    "care_center": {
+        "ar_key": "هل يذهب الى (مركز \\ اكاديمية رعاية)",
+        "value": "لا"
+    },
+    "care_duration": {
+        "ar_key": "المدى التى قضاها",
+        "value": ""
+    },
+    "care_type": {
+        "ar_key": "نوعها",
+        "value": ""
+    },
+    "care_discontinue": {
+        "ar_key": "سبب عدم الاستمرار",
+        "value": ""
+    },
+    "academic_issues": {
+        "ar_key": "هل يوجد مشاكل فى التحصيل الدراسى",
+        "value": "لا"
+    },
+    "academic_issues_type": {
+        "ar_key": "نوعها",
+        "value": ""
+    },
+    "abnormal_dev": {
+        "ar_key": "هل كانت هناك اشارات تدل على نمو غير طبيعى",
+        "value": ""
+    },
+    "abnormal_dev_what": {
+        "ar_key": "ما هى",
+        "value": ""
+    },
+    "diagnosis_what": {
+        "ar_key": "ما هو تشخيصه",
+        "value": ""
+    },
+    "breastfeeding_duration": {
+        "ar_key": "مدة الرضاعة",
+        "value": ""
+    },
+    "breastfeeding_type": {
+        "ar_key": "نوع الرضاعة",
+        "value": "صناعى"
+    },
+    "weaning": {
+        "ar_key": "الفطام",
+        "value": "تدريجى"
+    },
+    "weaning_age": {
+        "ar_key": "سن الفطام",
+        "value": ""
+    },
+    "breastfeeding_problems": {
+        "ar_key": "هل وجد مشاكل بالرضاعة",
+        "value": ""
+    },
+    "teething": {
+        "ar_key": "التسنين",
+        "value": ""
+    },
+    "crawling": {
+        "ar_key": "الحبو",
+        "value": ""
+    },
+    "sitting": {
+        "ar_key": "الجلوس",
+        "value": ""
+    },
+    "standing": {
+        "ar_key": "الوقوف",
+        "value": ""
+    },
+    "walking_start": {
+        "ar_key": "بدا المشى",
+        "value": ""
+    },
+    "walking": {
+        "ar_key": "المشى",
+        "value": ""
+    },
+    "diaper_free": {
+        "ar_key": "متى تخلص من الحفاظ",
+        "value": ""
+    },
+    "bathroom_request": {
+        "ar_key": "استخدام الحمام الان",
+        "value": "يطلب لفظيا"
+    },
+    "bathroom_independence": {
+        "ar_key": "يدخل الحمام",
+        "value": "مساعدة جزئية"
+    },
+    "vision_issues": {
+        "ar_key": "هل يعانى من اي ضعف فى درجة الابصار؟",
+        "value": "نعم"
+    },
+    "vision_type": {
+        "ar_key": "نوعه",
+        "value": ""
+    },
+    "vision_severity": {
+        "ar_key": "شدته",
+        "value": ""
+    },
+    "hearing_issues": {
+        "ar_key": "هل يعانى من ضعف سمع؟",
+        "value": "نعم"
+    },
+    "hearing_type": {
+        "ar_key": "نوعه",
+        "value": "توصيلى"
+    },
+    "hearing_severity": {
+        "ar_key": "شدته",
+        "value": ""
+    },
+    "hearing_aid": {
+        "ar_key": "هل يلبس سماعات؟",
+        "value": "نعم"
+    },
+    "hearing_aid_type": {
+        "ar_key": "نوعها",
+        "value": ""
+    },
+    "cochlear_implant": {
+        "ar_key": "هل يلبس قوقعة؟",
+        "value": "نعم"
+    },
+    "cochlear_since": {
+        "ar_key": "من امتى؟",
+        "value": ""
+    },
+    "speech_tone": {
+        "ar_key": "هل يتحدث الطفل بنبرة صوت ثابتة معينة",
+        "value": "نعم"
+    },
+    "speech_volume": {
+        "ar_key": "هل يتحدث الطفل بصوت",
+        "value": "مرتفع"
+    },
+    "drooling": {
+        "ar_key": "هل يعانى الطفل من سيلان اللعاب",
+        "value": "نعم"
+    },
+    "swallowing": {
+        "ar_key": "يعانى الطفل من صعوبة بلع",
+        "value": "نعم"
+    },
+    "breathing": {
+        "ar_key": "هل يعانى الطفل من اضطرابات التنفس",
+        "value": "نعم"
+    },
+    "breathing_type": {
+        "ar_key": "نوع اضطراب التنفس",
+        "value": "شهيق"
+    },
+    "iq_test": {
+        "ar_key": "اختبار ذكاء IQ",
+        "value": "نعم"
+    },
+    "iq_score": {
+        "ar_key": "الدرجة",
+        "value": ""
+    },
+    "hearing_test": {
+        "ar_key": "مقياس السمع",
+        "value": "نعم"
+    },
+    "hearing_score": {
+        "ar_key": "الدرجة",
+        "value": ""
+    },
+    "ear_pressure": {
+        "ar_key": "ضغط الاذن",
+        "value": "نعم"
+    },
+    "language_test": {
+        "ar_key": "اختبار اللغة",
+        "value": "نعم"
+    },
+    "speech_test": {
+        "ar_key": "اختبار نطق",
+        "value": "نعم"
+    },
+    "case_acceptance": {
+        "ar_key": "مدى تقبل الحالة للتاهيل",
+        "value": ""
+    },
+    "family_acceptance": {
+        "ar_key": "مدى تقبل الاسرة للمشكلة",
+        "value": ""
+    },
+    "speech_therapy": {
+        "ar_key": "تخاطب",
+        "value": "نعم"
+    },
+    "speech_therapy_progress": {
+        "ar_key": "مدى التقدم",
+        "value": ""
+    },
+    "physical_therapy": {
+        "ar_key": "علاج طبيعى",
+        "value": "نعم"
+    },
+    "physical_therapy_progress": {
+        "ar_key": "مدى التقدم",
+        "value": ""
+    },
+    "computer_therapy": {
+        "ar_key": "التعامل مع الكمبيوتر",
+        "value": "نعم"
+    },
+    "computer_therapy_progress": {
+        "ar_key": "مدى التقدم",
+        "value": ""
+    },
+    "skills_therapy": {
+        "ar_key": "تنمية المهارات",
+        "value": "نعم"
+    },
+    "skills_therapy_progress": {
+        "ar_key": "مدى التقدم",
+        "value": ""
+    },
+    "favorite_food": {
+        "ar_key": "ما اكثر الماكولات او المشروبات التى يفضلها",
+        "value": ""
+    },
+    "favorite_games": {
+        "ar_key": "ما اكثر الالعاب التى يحبها",
+        "value": ""
+    },
+    "other_likes": {
+        "ar_key": "اشياء اخرى يحبها",
+        "value": ""
+    },
+    "dislikes": {
+        "ar_key": "اشياء ينزعج منها",
+        "value": ""
+    },
+    "living_with": {
+        "ar_key": "مع من يعيش الطفل",
+        "value": ""
+    },
+    "attached_people": {
+        "ar_key": "هل يوجد اشخاص مرتبط بيهم الحالة (من الاسرة أو في المحيط) ويؤثرون فيه",
+        "value": ""
+    },
+    "caregiver": {
+        "ar_key": "من هو القائم برعاية الطفل",
+        "value": ""
+    },
+    "economic_status": {
+        "ar_key": "الوضع الاقتصادى",
+        "value": ""
+    },
+    "cultural_status": {
+        "ar_key": "الوضع الثقافى",
+        "value": ""
+    },
+    "social_status": {
+        "ar_key": "الوضع الاجتماعى",
+        "value": ""
+    },
+    "family_relationship": {
+        "ar_key": "طبيعة العلاقة الاسرية",
+        "value": ""
+    },
+    "family_acceptance_rehab": {
+        "ar_key": "مدى تقبل الاسرة للاضطراب واستعدادها للمشاركة فى التأهيل",
+        "value": ""
+    },
+    "mother_health_pregnancy": {
+        "ar_key": "صحة الام اثناء الحمل كانت",
+        "value": "مستقرة"
+    },
+    "birth_type": {
+        "ar_key": "نوع الولادة",
+        "value": "طبيعى"
+    },
+    "birth_weight": {
+        "ar_key": "وزن الطفل عند الولادة",
+        "value": ""
+    },
+    "birth_cry": {
+        "ar_key": "هل صرخ الطفل صرخة الميلاد",
+        "value": "نعم"
+    },
+    "head_size": {
+        "ar_key": "حجم راس الطفل عند الولادة",
+        "value": "طبيعى"
+    },
+    "head_size_value": {
+        "ar_key": "كان",
+        "value": ""
+    },
+    "birth_defects": {
+        "ar_key": "هل كان هناك عيوب خلقية بعد الولادة",
+        "value": "نعم"
+    },
+    "birth_defects_what": {
+        "ar_key": "ما هى",
+        "value": ""
+    }
+}

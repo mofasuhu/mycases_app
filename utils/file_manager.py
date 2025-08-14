@@ -67,7 +67,7 @@ def save_case_data_to_json(case_data):
     if not isinstance(case_data, dict):
         return False, "تنسيق بيانات الحالة غير صالح."
 
-    child_name = case_data.get("child_name")
+    child_name = case_data.get("child_name", {}).get("value", "")
     case_id = case_data.get("case_id")
 
     if not child_name or not case_id:
