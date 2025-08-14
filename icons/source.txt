@@ -1,0 +1,10 @@
+https://lucide.dev/icons/
+
+colors:
+#175606  green
+
+sizes:
+32px
+
+ext:
+png

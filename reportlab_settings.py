@@ -1,0 +1,1 @@
+rtlSupport = True
