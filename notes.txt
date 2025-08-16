@@ -1,46 +1,4 @@
-Python311 is better
-
-"D:\Progs\Python\Python311\python.exe" -m venv venv311
-venv311\Scripts\activate
-
-
-
-
-python.exe -m pip install --upgrade pip
-pip install -r requirements.txt
-
-or
-python.exe -m pip install --trusted-host pypi.org --trusted-host files.pythonhosted.org --upgrade pip
-pip install --trusted-host pypi.org --trusted-host files.pythonhosted.org -r requirements.txt
-
-pause
-
-
-
-python.exe -m pip install --upgrade pip
-
-pip install reportlab rlbidi -i https://www.reportlab.com/pypi
-
-
-pip install rlbidi-0.1.0-cp38-abi3-win_amd64.whl
-
-pip uninstall reportlab
-pip uninstall rlbidi
-pip uninstall -y rlbidi
-
-pip install --no-cache-dir --index-url https://www.reportlab.com/pypi --extra-index-url https://pypi.org/simple rlbidi
-
-pip install reportlab -i https://www.reportlab.com/pypi
-pip install rlbidi -i https://www.reportlab.com/pypi
-
-pip install reportlab --no-binary :all: -i https://www.reportlab.com/pypi
-pip install rlbidi --no-binary :all: -i https://www.reportlab.com/pypi
-
-mofasuhu@gmail.com
-knNiiRBvvJW!9zy
-
-
-
+D:\Projects\FreeLancer\Case_Follow-Up\data
 
 
 زرار تعديل الحالة في النافذة الرئيسية   Done
@@ -49,7 +7,7 @@ knNiiRBvvJW!9zy
 
 إضافة ايقونات للأزرار كلما أمكن    Done
 
-فتح النوافذ كلها maximized    Done
+فتح النوافذ كلها  maximized    Done
 
 الأرقام دائما انجليزية بغض النظر عن اعدادات الجهاز    Done
 test: pc settings -> time & language -> language & region -> related settings -> administrative language settings -> formats -> additional settings -> numbers -> standard digits and use native digits
@@ -58,31 +16,35 @@ then test    Done
 ادخال التواريخ خانة لليوم خانة للشهر وخانة للسنة    Done
 
 
-جعل بعض القوائم ظاهرة مع إمكانية الاختيار بعلامة صح    Done (ignored)
+جعل بعض القوائم ظاهرة مع إمكانية الاختيار بعلامة صح    Done
 
-زرار طباعة بي دي اف لجميع بيانات الحالة مع اختيار استبيانات معينة أو كل الاستبيانات
-الاستبيانات الجديدة في قائمة
-الحالة تحفظ بالاسم و التشخيص وليس الاسم فقط
+زرار طباعة بي دي اف لجميع بيانات الحالة مع اختيار استبيانات معينة أو كل الاستبيانات    Done
 
-الفلترة بالاسم و التشخيص و العمر
-الظهور في القائمة - الاسم و التشخيص والعمر و عدم ظهور رقم الحالة
-زرار تعديل بيانات الحالة في نافذة عرض الحالة يكون فوق
-إلغاء زر إغلاق من أي نافذة و الاكتفاء بالاكس فوق
-زر حذف استبيانات 
-زر تعديل استبيان
-زر تحديد الكل في أي قائمة
+الاستبيانات الجديدة في قائمة    Done
+
+إلغاء زر إغلاق من أي نافذة و الاكتفاء بالاكس فوق   Done
+
+زر حذف استبيانات    Done
+
+زر تعديل استبيان   Done
+
+زر تحديد الكل في أي قائمة   Done
+
+زرار تعديل بيانات الحالة في نافذة عرض الحالة يكون فوق    Done
+
+
+الحالة تحفظ بالاسم و التشخيص وليس الاسم فقط    Done
+الفلترة بالاسم و التشخيص و العمر    Done
+الظهور في القائمة - الاسم و التشخيص والعمر و عدم ظهور رقم الحالة    Done
 
 
 خيار طباعة أي بيانات باللغتين
 إمكانية ترجمة المدخلات
 إمكانية تغيير اللغة من الشاشة الرئيسية
 
+pyinstaller --name mycases_app --windowed main.py
 
-
-
-
-
-
+pyinstaller mycases_app.spec
 
 
 cmd command: 

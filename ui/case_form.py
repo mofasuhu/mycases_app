@@ -1,15 +1,15 @@
 from PyQt5.QtWidgets import (
     QDialog, QFormLayout, QLineEdit, QLabel, QScrollArea,
-    QDateEdit, QComboBox, QSpinBox, QPushButton, 
+    QComboBox, QSpinBox, QPushButton, 
     QVBoxLayout, QHBoxLayout, QGroupBox, QMessageBox, QWidget
 )
 from PyQt5.QtCore import QDate, Qt, QSize
-from PyQt5.QtGui import QIcon, QIntValidator
+from PyQt5.QtGui import QIcon
 
 from datetime import date
 
-from utils.file_manager import save_case_data_to_json, get_next_case_id # type: ignore
-from utils.general import make_all_labels_copyable, create_dob_input # type: ignore
+from utils.file_manager import save_case_data_to_json, get_next_case_id
+from utils.general import make_all_labels_copyable, create_dob_input, resource_path
 
 class CaseForm(QDialog):
     def __init__(self, parent=None, case_data_to_load=None):
@@ -253,13 +253,13 @@ class CaseForm(QDialog):
         self.button_box = QHBoxLayout()
 
         self.save_button = QPushButton()
-        self.save_button.setIcon(QIcon("icons/save.png"))
+        self.save_button.setIcon(QIcon(resource_path("icons/save.png")))
         self.save_button.setIconSize(QSize(32, 32))
         self.save_button.setToolTip("حفظ")   
         self.save_button.clicked.connect(self.save_case_data)
 
         self.cancel_button = QPushButton()
-        self.cancel_button.setIcon(QIcon("icons/cancel.png"))
+        self.cancel_button.setIcon(QIcon(resource_path("icons/cancel.png")))
         self.cancel_button.setIconSize(QSize(32, 32))
         self.cancel_button.setToolTip("إلغاء")
         self.cancel_button.clicked.connect(self.reject)
@@ -639,6 +639,11 @@ class CaseForm(QDialog):
             QMessageBox.warning(self, "بيانات ناقصة", "الرجاء إدخال اسم الحالة.")
             self.child_name_edit.setFocus()
             return
+        
+        if not case_data["diagnosis"]:
+            QMessageBox.warning(self, "بيانات ناقصة", "الرجاء إدخال التشخيص.")
+            self.diagnosis_edit.setFocus()
+            return        
 
         if not self.case_data_to_load:
             case_data["case_id"] = get_next_case_id()

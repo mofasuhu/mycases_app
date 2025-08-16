@@ -1,0 +1,119 @@
+{
+    "child_name": {
+        "ar_key": "اسم الحالة",
+        "value": "علي"
+    },
+    "dob": {
+        "ar_key": "تاريخ الميلاد",
+        "value": "2021-08-16"
+    },
+    "age": {
+        "ar_key": "العمر",
+        "value": "4 سنة، 0 شهر، 0 يوم"
+    },
+    "gender": {
+        "ar_key": "الجنس",
+        "value": "ذكر"
+    },
+    "first_language": {
+        "ar_key": "اللغة الأولى",
+        "value": "اللغة العربية - مصر"
+    },
+    "first_language_notes": {
+        "ar_key": "ملاحظات اللغة الأولى",
+        "value": ""
+    },
+    "second_language": {
+        "ar_key": "اللغة الثانية",
+        "value": "اللغة العربية - مصر"
+    },
+    "second_language_notes": {
+        "ar_key": "ملاحظات اللغة الثانية",
+        "value": ""
+    },
+    "diagnosis": {
+        "ar_key": "التشخيص",
+        "value": "ذهني"
+    },
+    "diagnosed_by": {
+        "ar_key": "بواسطة",
+        "value": ""
+    },
+    "father_name": {
+        "ar_key": "اسم الأب",
+        "value": ""
+    },
+    "father_dob": {
+        "ar_key": "تاريخ ميلاد الأب",
+        "value": "1995-08-16"
+    },
+    "father_age": {
+        "ar_key": "عمر الأب",
+        "value": "30 سنة، 0 شهر"
+    },
+    "father_job": {
+        "ar_key": "وظيفة الأب",
+        "value": ""
+    },
+    "father_health": {
+        "ar_key": "الحالة الصحية للأب",
+        "value": ""
+    },
+    "mother_name": {
+        "ar_key": "اسم الأم",
+        "value": ""
+    },
+    "mother_dob": {
+        "ar_key": "تاريخ ميلاد الأم",
+        "value": "2000-08-16"
+    },
+    "mother_age": {
+        "ar_key": "عمر الأم",
+        "value": "25 سنة، 0 شهر"
+    },
+    "mother_job": {
+        "ar_key": "وظيفة الأم",
+        "value": ""
+    },
+    "mother_health": {
+        "ar_key": "الحالة الصحية للأم",
+        "value": ""
+    },
+    "father_preg_age": {
+        "ar_key": "عمر الأب عند الولادة",
+        "value": "26 سنة، 0 شهر"
+    },
+    "mother_preg_age": {
+        "ar_key": "عمر الأم عند الولادة",
+        "value": "21 سنة، 0 شهر"
+    },
+    "parents_relation": {
+        "ar_key": "صلة قرابة بين الوالدين؟",
+        "value": "نعم"
+    },
+    "relation_degree": {
+        "ar_key": "درجة القرابة",
+        "value": "أبناء عم/خال من الدرجة الأولى"
+    },
+    "family_size": {
+        "ar_key": "حجم الأسرة",
+        "value": 2
+    },
+    "siblings_count": {
+        "ar_key": "عدد الإخوة",
+        "value": 0
+    },
+    "child_order": {
+        "ar_key": "ترتيب الحالة بين الأخوة",
+        "value": 1
+    },
+    "similar_cases_family": {
+        "ar_key": "حالات مشابهة في العائلة؟",
+        "value": "نعم"
+    },
+    "similar_cases_who": {
+        "ar_key": "من؟",
+        "value": ""
+    },
+    "case_id": "22"
+}

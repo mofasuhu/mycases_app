@@ -1,9 +1,29 @@
 import json
 import os
 import re
+from reportlab.pdfbase import pdfmetrics
+from reportlab.pdfbase.ttfonts import TTFont
+from .general import resource_path
 
-DATA_DIR = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), "data")
-CASE_IDS_FILE = os.path.join(DATA_DIR, "case_ids.json")
+DATA_DIR = None
+
+def set_data_directory(path):
+    """Sets the global DATA_DIR for the application session."""
+    global DATA_DIR
+    DATA_DIR = path
+    # Ensure the directory exists when it's set.
+    if not os.path.exists(DATA_DIR):
+        try:
+            os.makedirs(DATA_DIR)
+        except OSError as e:
+            print(f"Could not create data directory at {DATA_DIR}: {e}")
+            return False
+    return True
+
+def get_data_directory():
+    """Gets the current DATA_DIR."""
+    return DATA_DIR
+
 
 def sanitize_filename(name):
     """Sanitizes a string to be used as a filename by removing or replacing invalid characters."""
@@ -27,10 +47,12 @@ def get_next_case_id():
     # Initialize case IDs tracking structure
     case_ids = {"next_id": "1", "used_ids": []}
     
+    case_ids_file = os.path.join(DATA_DIR, "case_ids.json")
+
     # Load existing case IDs if available
-    if os.path.exists(CASE_IDS_FILE):
+    if os.path.exists(case_ids_file):
         try:
-            with open(CASE_IDS_FILE, 'r', encoding='utf-8') as f:
+            with open(case_ids_file, 'r', encoding='utf-8') as f:
                 case_ids = json.load(f)
         except Exception as e:
             print(f"Error loading case IDs file: {str(e)}. Starting with new tracking.")
@@ -45,7 +67,7 @@ def get_next_case_id():
     
     # Save the updated tracking information
     try:
-        with open(CASE_IDS_FILE, 'w', encoding='utf-8') as f:
+        with open(case_ids_file, 'w', encoding='utf-8') as f:
             json.dump(case_ids, f, ensure_ascii=False, indent=4)
     except Exception as e:
         print(f"Error saving case IDs file: {str(e)}")
@@ -68,10 +90,14 @@ def save_case_data_to_json(case_data):
         return False, "تنسيق بيانات الحالة غير صالح."
 
     child_name = case_data.get("child_name", {}).get("value", "")
+    age = case_data.get("age", {}).get("value", "")
+    diagnosis = case_data.get("diagnosis", {}).get("value", "")
     case_id = case_data.get("case_id")
 
-    if not child_name or not case_id:
-        return False, "يجب إدخال اسم الطفل ومعرف الحالة لحفظ الحالة."
+    case_name = f"{case_id} - {child_name} - {age} - {diagnosis}"
+
+    if not child_name or not case_id or not diagnosis:
+        return False, "يجب إدخال اسم الطفل والتشخيص لحفظ الحالة."
 
     try:
         if not os.path.exists(DATA_DIR):
@@ -87,7 +113,7 @@ def save_case_data_to_json(case_data):
             else:
                 print(f"Could not find folder for case ID {case_id}. A new folder will be created.")
         
-        child_data_path = os.path.join(DATA_DIR, case_id)
+        child_data_path = os.path.join(DATA_DIR, case_name)
         if not os.path.exists(child_data_path):
             os.makedirs(child_data_path)
         
@@ -150,30 +176,41 @@ def save_survey_data_to_json(case_folder_name, survey_data):
         return False, error_msg
 
 def load_surveys_for_case(case_folder_name):
-    """Loads all survey JSON files for a given case folder.
+    """Loads all survey JSON files for a given case folder and sorts them by survey date.
     Args:
         case_folder_name (str): The folder name of the case.
     Returns:
-        list: A list of dictionaries, where each dictionary is a loaded survey. Returns empty list on error or if no surveys.
+        list: A list of dictionaries, where each dictionary is a loaded survey,
+              sorted from the oldest to the most recent survey date.
+              Returns an empty list on error or if no surveys are found.
     """
     surveys_dir_path = os.path.join(DATA_DIR, case_folder_name, "surveys")
     loaded_surveys = []
 
     if not os.path.exists(surveys_dir_path) or not os.path.isdir(surveys_dir_path):
-        return loaded_surveys # No surveys directory, so no surveys
+        return loaded_surveys
 
-    for filename in sorted(os.listdir(surveys_dir_path), reverse=True): # Sort by name (often date-based)
+    # First, load all survey files from the directory
+    for filename in os.listdir(surveys_dir_path):
         if filename.endswith(".json"):
             file_path = os.path.join(surveys_dir_path, filename)
             try:
                 with open(file_path, 'r', encoding='utf-8') as f:
                     survey_content = json.load(f)
-                    # Add filename to the content for reference if needed in UI
-                    survey_content['_filename'] = filename.replace(".json","") 
+                    # Add filename to the content for reference
+                    survey_content['_filename'] = filename.replace(".json", "")
+                    # Ensure survey_date exists for sorting, default to a very old date if missing
+                    if "survey_date" not in survey_content:
+                        survey_content["survey_date"] = "1900-01-01" # Default for sorting purposes
                     loaded_surveys.append(survey_content)
             except Exception as e:
                 print(f"Error loading survey file {file_path}: {str(e)}")
-                # Optionally, append a placeholder or error object
+
+    # After loading, sort the list of surveys based on the 'survey_date' key
+    # The key=lambda item: item.get("survey_date") ensures it sorts by the date string.
+    # Sorting strings in "YYYY-MM-DD" format works correctly for chronological order.
+    loaded_surveys.sort(key=lambda item: item.get("survey_date"))
+
     return loaded_surveys
 
 def load_single_survey(case_folder_name, survey_filename):
@@ -194,3 +231,47 @@ def load_single_survey(case_folder_name, survey_filename):
     except Exception as e:
         print(f"Error loading survey {survey_file_path}: {e}")
         return None
+
+
+def delete_survey_file(case_folder_name, survey_filename_with_ext):
+    """Deletes a specific survey JSON file from a case's survey directory.
+    Args:
+        case_folder_name (str): The folder name of the case.
+        survey_filename_with_ext (str): The full filename of the survey to delete (e.g., 'استبيان... .json').
+    Returns:
+        tuple: (bool, str) indicating success and a message.
+    """
+    if not survey_filename_with_ext.endswith('.json'):
+        survey_filename_with_ext += '.json'
+
+    survey_file_path = os.path.join(DATA_DIR, case_folder_name, "surveys", survey_filename_with_ext)
+
+    if not os.path.exists(survey_file_path):
+        return False, f"الملف المحدد غير موجود: {survey_filename_with_ext}"
+    
+    try:
+        os.remove(survey_file_path)
+        print(f"Successfully deleted survey: {survey_file_path}")
+        return True, "تم حذف الاستبيان بنجاح."
+    except OSError as e:
+        error_msg = f"حدث خطأ أثناء حذف الملف: {e}"
+        print(error_msg)
+        return False, error_msg
+
+
+# Register fonts for Arabic support
+def register_fonts():
+    font_dir = os.path.join(os.path.dirname(__file__), "..", "fonts")
+    # pdfmetrics.registerFont(TTFont('MyNoto', os.path.join(font_dir, "NotoNaskhArabic-Regular.ttf")))
+    # pdfmetrics.registerFont(TTFont('MyNotoBold', os.path.join(font_dir, "NotoNaskhArabic-Bold.ttf")))
+
+    pdfmetrics.registerFont(TTFont('MyNoto', resource_path("fonts/NotoNaskhArabic-Regular.ttf")))
+    pdfmetrics.registerFont(TTFont('MyNotoBold', resource_path("fonts/NotoNaskhArabic-Bold.ttf")))    
+
+    pdfmetrics.registerFont(TTFont('NotoSerif', resource_path("fonts/NotoSerif-Regular.ttf")))
+    pdfmetrics.registerFont(TTFont('NotoSerifBold', resource_path("fonts/NotoSerif-Bold.ttf")))  
+    pdfmetrics.registerFont(TTFont('NotoSerifItalic', resource_path("fonts/NotoSerif-Italic.ttf")))
+        
+    # pdfmetrics.registerFont(TTFont('NotoSerif', os.path.join(font_dir, "NotoSerif-Regular.ttf")))
+    # pdfmetrics.registerFont(TTFont('NotoSerifBold', os.path.join(font_dir, "NotoSerif-Bold.ttf")))
+    # pdfmetrics.registerFont(TTFont('NotoSerifItalic', os.path.join(font_dir, "NotoSerif-Italic.ttf")))

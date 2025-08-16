@@ -1,0 +1,21 @@
+{
+    "survey_type": "استبيان الروتين اليومي",
+    "survey_date": "2025-08-14",
+    "submission_timestamp": "2025-08-16T22:04:48.829463",
+    "sleep_pattern": {
+        "ar_key": "نمط النوم",
+        "value": "متقطع"
+    },
+    "eating_habits": {
+        "ar_key": "عادات الأكل",
+        "value": "يحتاج مساعدة بسيطة"
+    },
+    "toilet_training": {
+        "ar_key": "التدريب على الحمام",
+        "value": "لم يبدأ التدريب"
+    },
+    "daily_routine_notes": {
+        "ar_key": "ملاحظات إضافية",
+        "value": "-"
+    }
+}

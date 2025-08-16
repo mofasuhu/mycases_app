@@ -1,0 +1,21 @@
+{
+    "survey_type": "استبيان التفاعل الاجتماعي",
+    "survey_date": "2025-08-13",
+    "submission_timestamp": "2025-08-16T21:10:51.693597",
+    "interaction_with_peers": {
+        "ar_key": "التفاعل مع الأقران",
+        "value": "يبادر باللعب"
+    },
+    "interaction_with_adults": {
+        "ar_key": "التفاعل مع البالغين",
+        "value": "يتفاعل بسهولة"
+    },
+    "eye_contact": {
+        "ar_key": "التواصل البصري",
+        "value": "جيد ومستمر"
+    },
+    "social_interaction_notes": {
+        "ar_key": "ملاحظات إضافية",
+        "value": ""
+    }
+}
