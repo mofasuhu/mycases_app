@@ -9,3 +9,5 @@ venv/
 ui/*.pdf
 *.pdf
 Code.exe.lnk
+build/
+dist/
