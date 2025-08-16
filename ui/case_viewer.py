@@ -128,7 +128,7 @@ class CaseViewer(QDialog):
         self.setGeometry(250, 50, 800, 600)
         # Add minimize and maximize buttons to the window
         self.setWindowFlags(self.windowFlags() | Qt.WindowMinimizeButtonHint | Qt.WindowMaximizeButtonHint)
-        # self.setWindowState(Qt.WindowMaximized)
+        self.setWindowState(Qt.WindowMaximized)
 
         # --- Main Layout ---
         scroll = QScrollArea(self)
@@ -319,21 +319,17 @@ class CaseViewer(QDialog):
         # --- Buttons (Export Full Case, Edit, Close) ---
         self.button_box = QHBoxLayout()
 
-        # Export full case button
-        self.export_full_case_button = QPushButton()
-        self.export_full_case_button.setIcon(QIcon("icons/export.png"))  # choose your icon
-        self.export_full_case_button.setIconSize(QSize(32, 32))
-        self.export_full_case_button.setToolTip("تصدير بيانات الحالة وكافة الاستبيانات إلى PDF")
-        self.export_full_case_button.clicked.connect(self.export_full_case_to_pdf)
-
-
-        self.button_box = QHBoxLayout()
-
         self.edit_button = QPushButton()
         self.edit_button.setIcon(QIcon("icons/edit.png"))
         self.edit_button.setIconSize(QSize(32, 32))
         self.edit_button.setToolTip("تعديل بيانات الحالة")        
         self.edit_button.clicked.connect(self.edit_case_data)
+
+        self.export_full_case_button = QPushButton()
+        self.export_full_case_button.setIcon(QIcon("icons/export.png"))  # choose your icon
+        self.export_full_case_button.setIconSize(QSize(32, 32))
+        self.export_full_case_button.setToolTip("تصدير بيانات الحالة وكافة الاستبيانات إلى PDF")
+        self.export_full_case_button.clicked.connect(self.export_full_case_to_pdf)
 
         self.close_button = QPushButton()
         self.close_button.setIcon(QIcon("icons/close.png"))
@@ -342,8 +338,8 @@ class CaseViewer(QDialog):
         self.close_button.clicked.connect(self.reject)
 
         self.button_box.addStretch()
-        self.button_box.addWidget(self.export_full_case_button)
         self.button_box.addWidget(self.edit_button)
+        self.button_box.addWidget(self.export_full_case_button)
         self.button_box.addWidget(self.close_button)
         self.main_layout.addLayout(self.button_box)
 
@@ -680,7 +676,7 @@ class CaseViewer(QDialog):
             # Ask where to save
             file_path, _ = QFileDialog.getSaveFileName(self, "حفظ تقرير الحالة", f"{self.case_data.get('child_name', {}).get('value', 'حالة')}.pdf", "PDF Files (*.pdf)")
             if not file_path:
-                return False, QMessageBox.critical(self, "خطأ في التصدير", f"مسار الملف مفقود!")
+                return
             if not file_path.lower().endswith(".pdf"):
                 file_path += ".pdf"
 
@@ -711,7 +707,7 @@ class CaseViewer(QDialog):
                         label = key
                     case_table_data.append([Paragraph(pdf_ar_fix(str(val)), cell_style), Paragraph(pdf_ar_fix(str(label)), cell_style_bold)])
 
-            table = Table(case_table_data, colWidths=[doc.width*0.4, doc.width*0.6])
+            table = Table(case_table_data, colWidths=[doc.width*0.35, doc.width*0.65])
             table.setStyle(TableStyle([
                 ('GRID', (0,0), (-1,-1), 1, colors.white),
                 ('BACKGROUND', (1, 0), (1, -1), colors.whitesmoke),
@@ -745,7 +741,7 @@ class CaseViewer(QDialog):
                                 val = value
                                 label = key
                             survey_table_data.append([Paragraph(pdf_ar_fix(str(val)), cell_style), Paragraph(pdf_ar_fix(str(label)), cell_style_bold)])
-                    s_table = Table(survey_table_data, colWidths=[doc.width*0.4, doc.width*0.6])
+                    s_table = Table(survey_table_data, colWidths=[doc.width*0.35, doc.width*0.65])
                     s_table.setStyle(TableStyle([
                         ('GRID', (0,0), (-1,-1), 1, colors.white),
                         ('BACKGROUND', (1, 0), (1, -1), colors.whitesmoke),

@@ -1,1 +1,0 @@
-rtlSupport = True

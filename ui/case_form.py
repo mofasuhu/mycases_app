@@ -20,7 +20,7 @@ class CaseForm(QDialog):
         self.setGeometry(250, 50, 800, 600)
         # Add minimize and maximize buttons to the window
         self.setWindowFlags(self.windowFlags() | Qt.WindowMinimizeButtonHint | Qt.WindowMaximizeButtonHint)
-        # self.setWindowState(Qt.WindowMaximized)
+        self.setWindowState(Qt.WindowMaximized)
         # --- Main Layout ---
         scroll = QScrollArea(self)
         scroll.setWidgetResizable(True)

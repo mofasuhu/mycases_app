@@ -6,5 +6,8 @@ colors:
 sizes:
 32px
 
+stroke width:
+1.5px
+
 ext:
 png

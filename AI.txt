@@ -1,52 +1,46 @@
 "1111111111111111111111111111111111111111111111111111111111111"
-I have created a Python based desktop application called "Case_Follow-Up" on my Windows computer which is intended for Windows users who specialize in quality education and behavior modification for children with special needs.
+I have created a Python based desktop application called "mycases_app" on my Windows computer which is intended for Windows users who specialize in quality education and behavior modification for children with special needs.
 I am still in the developing phase. It is for Arabic speakers users till now but later I will implement the bilingual feature.
-I will send you here, the current tree of the project directory, and if you catch any scripts' errors, you can tell me what I must replace to fix them, then in th next messages, I will start asking you to add new features or update existing ones, one by one:
-MYCASES_APP/
-│   main.py
-│   requirements.txt
-│
-├───assets/
-│   └───translations
-│           ar.qm
-│           en.qm
-│
-├───data/
-│   │   case_ids.json
-│   │
-│   └───1/  # an example case
-│       │   case.json
-│       │
-│       └───surveys/
-│               استبيان التقييم الأول.json  # an example survey and we will add more surveys up to 20 surveys
-│
-├───fonts
-│       NotoNaskhArabic-Bold.ttf
-│       NotoNaskhArabic-Regular.ttf
-│       NotoSerif-Bold.ttf
-│       NotoSerif-Italic.ttf
-│       NotoSerif-Regular.ttf
-│
-├───icons
-│       app_icon.png
-│       cancel.png
-│       close.png
-│       create.png
-│       edit.png
-│       open.png
-│       refresh.png
-│       save.png
-│       trash.png
-│
-├───styles
-│       main_style.qss
-│
-├───ui
-│       case_form.py
-│       case_viewer.py
-│       main_window.py
-│       pdf_exporter.py
-│       survey_form_first.py
+I will send you here, the current tree of the project directory and the contents of current main project files, then in th next messages, I will start asking you to add new features or update existing ones, one by one:
+mycases_app/
+    main.py
+    requirements.txt
+    .gitignore
+    assets/
+        translations/
+            ar.qm
+            en.qm
+    data/
+        case_ids.json
+        1/  # an example case folder
+            case.json
+            surveys/
+            استبيان التقييم الأول.json  # an example survey and we will add more surveys up to 20 surveys
+    fonts/
+        NotoNaskhArabic-Bold.ttf
+        NotoNaskhArabic-Regular.ttf
+        NotoSerif-Bold.ttf
+        NotoSerif-Italic.ttf
+        NotoSerif-Regular.ttf
+    icons/
+        app_icon.png
+        export.png
+        cancel.png
+        close.png
+        create.png
+        edit.png
+        open.png
+        refresh.png
+        save.png
+        trash.png
+    styles/
+        main_style.qss
+        ui
+        case_form.py
+        case_viewer.py
+        main_window.py
+        pdf_exporter.py
+        survey_form_first.py
 │
 └───utils
         file_manager.py
@@ -54,7 +48,8 @@ MYCASES_APP/
         translator.py
 _____________________________________________________________
 
-I will send you here the contents of current main project files and .
+I will send you here the contents of current main project files.
+
 requirements.txt:
 PyQt5
 reportlab

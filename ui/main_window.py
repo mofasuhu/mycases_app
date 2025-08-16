@@ -23,7 +23,7 @@ class MainWindow(QMainWindow):
         # --- Window Properties ---
         self.setWindowTitle("إدارة الحالات")
         self.setGeometry(250, 50, 800, 600)
-        # self.showMaximized()
+        self.showMaximized()
 
         # --- Central Widget and Layout ---
         self.central_widget = QWidget()

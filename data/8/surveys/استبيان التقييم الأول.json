@@ -1,11 +1,11 @@
 {
     "survey_type": "استبيان التقييم الأول",
-    "survey_date": "2025-07-10",
+    "survey_date": "2025-08-16",
     "case_id": "8",
     "child_name": "منار محمد عبد الحفيظ",
-    "dob": "2018-09-03",
+    "dob": "2015-09-03",
     "gender": "أنثى",
-    "submission_timestamp": "2025-08-14T12:13:30.611892",
+    "submission_timestamp": "2025-08-16T15:04:39.027602",
     "school_attendance": {
         "ar_key": "هل يذهب الى (المدرسة \\ الحضانة)",
         "value": "نعم"
@@ -28,7 +28,7 @@
     },
     "care_center": {
         "ar_key": "هل يذهب الى (مركز \\ اكاديمية رعاية)",
-        "value": "لا"
+        "value": "نعم"
     },
     "care_duration": {
         "ar_key": "المدى التى قضاها",
@@ -44,7 +44,7 @@
     },
     "academic_issues": {
         "ar_key": "هل يوجد مشاكل فى التحصيل الدراسى",
-        "value": "لا"
+        "value": "نعم"
     },
     "academic_issues_type": {
         "ar_key": "نوعها",
@@ -68,7 +68,7 @@
     },
     "breastfeeding_type": {
         "ar_key": "نوع الرضاعة",
-        "value": "صناعى"
+        "value": "طبيعى"
     },
     "weaning": {
         "ar_key": "الفطام",
@@ -116,7 +116,7 @@
     },
     "bathroom_independence": {
         "ar_key": "يدخل الحمام",
-        "value": "مساعدة جزئية"
+        "value": "وحدة"
     },
     "vision_issues": {
         "ar_key": "هل يعانى من اي ضعف فى درجة الابصار؟",

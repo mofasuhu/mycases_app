@@ -123,22 +123,26 @@ def export_survey_to_pdf_with_custom_path(survey_data, custom_path, case_data_fo
             story.append(Paragraph(pdf_ar_fix("معلومات الحالة"), sectiontitle_style))
             story.append(Spacer(1, 12))
             case_data = [
+                [Paragraph(pdf_ar_fix(case_data_for_context.get("case_id", "-")), cell_style), Paragraph(pdf_ar_fix("رقم الحالة"), cell_style_bold)],
                 [Paragraph(pdf_ar_fix(case_data_for_context.get("child_name", {}).get("value", "-")), cell_style), Paragraph(pdf_ar_fix("اسم الحالة"), cell_style_bold)],
-                [Paragraph(pdf_ar_fix(case_data_for_context.get("dob", {}).get("value", "-")), cell_style), Paragraph(pdf_ar_fix("تاريخ الميلاد"), cell_style_bold)],          
+                [Paragraph(pdf_ar_fix(case_data_for_context.get("dob", {}).get("value", "-")), cell_style), Paragraph(pdf_ar_fix("تاريخ الميلاد"), cell_style_bold)],
+                [Paragraph(pdf_ar_fix(case_data_for_context.get("age", {}).get("value", "-")), cell_style), Paragraph(pdf_ar_fix("العمر"), cell_style_bold)],          
                 [Paragraph(pdf_ar_fix(case_data_for_context.get("gender", {}).get("value", "-")), cell_style), Paragraph(pdf_ar_fix("الجنس"), cell_style_bold)],           
                 [Paragraph(pdf_ar_fix(case_data_for_context.get("diagnosis", {}).get("value", "-")), cell_style), Paragraph(pdf_ar_fix("التشخيص"), cell_style_bold)],
             ]
-            table = Table(case_data, colWidths=[doc.width*0.3, doc.width*0.7])
+            table = Table(case_data, colWidths=[doc.width*0.35, doc.width*0.65])
             table.setStyle(TableStyle([
-                ('BACKGROUND', (1, 0), (1, -1), colors.lightgrey),
+                ('BACKGROUND', (1, 0), (1, -1), colors.whitesmoke),
                 ('ALIGN', (0, 0), (-1, -1), 'RIGHT'),
                 ('FONTNAME', (1, 0), (1, -1), ar_font_name_bold),
                 ('FONTNAME', (0, 0), (0, -1), ar_font_name),
                 ('FONTSIZE', (0, 0), (-1, -1), 10),
-                ('GRID', (0, 0), (-1, -1), 1, colors.black),
+                ('GRID', (0, 0), (-1, -1), 1, colors.white),
                 ('TOPPADDING', (0, 0), (-1, -1), 4),
                 ('BOTTOMPADDING', (0, 0), (-1, -1), 4),                
             ]))
+
+
             story.append(table)
             story.append(Spacer(1, 20))
 
@@ -159,14 +163,14 @@ def export_survey_to_pdf_with_custom_path(survey_data, custom_path, case_data_fo
                     Paragraph(pdf_ar_fix(value['ar_key']), cell_style_bold) if isinstance(value, dict) else Paragraph(pdf_ar_fix(key), cell_style_bold)
                 ])
 
-        survey_table = Table(survey_table_data, colWidths=[doc.width*0.3, doc.width*0.7])
+        survey_table = Table(survey_table_data, colWidths=[doc.width*0.35, doc.width*0.65])
         survey_table.setStyle(TableStyle([
-            ('BACKGROUND', (1, 0), (1, -1), colors.lightgrey),
+            ('BACKGROUND', (1, 0), (1, -1), colors.whitesmoke),
             ('ALIGN', (0, 0), (-1, -1), 'RIGHT'),
             ('FONTNAME', (1, 0), (1, -1), ar_font_name_bold),
             ('FONTNAME', (0, 0), (0, -1), ar_font_name),
             ('FONTSIZE', (0, 0), (-1, -1), 10),
-            ('GRID', (0, 0), (-1, -1), 1, colors.black),
+            ('GRID', (0, 0), (-1, -1), 1, colors.white),
             ('TOPPADDING', (0, 0), (-1, -1), 4),
             ('BOTTOMPADDING', (0, 0), (-1, -1), 4),            
         ]))
