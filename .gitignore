@@ -11,3 +11,4 @@ ui/*.pdf
 Code.exe.lnk
 build/
 dist/
+node_modules
