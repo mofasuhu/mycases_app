@@ -90,11 +90,11 @@ def save_case_data_to_json(case_data):
         return False, "تنسيق بيانات الحالة غير صالح."
 
     child_name = case_data.get("child_name", {}).get("value", "")
-    age = case_data.get("age", {}).get("value", "")
+    dob = case_data.get("dob", {}).get("value", "")
     diagnosis = case_data.get("diagnosis", {}).get("value", "")
     case_id = case_data.get("case_id")
 
-    case_name = f"{case_id} - {child_name} - {age} - {diagnosis}"
+    case_name = f"{case_id} - {child_name} - {dob}"
 
     if not child_name or not case_id or not diagnosis:
         return False, "يجب إدخال اسم الطفل والتشخيص لحفظ الحالة."
@@ -275,3 +275,4 @@ def register_fonts():
     # pdfmetrics.registerFont(TTFont('NotoSerif', os.path.join(font_dir, "NotoSerif-Regular.ttf")))
     # pdfmetrics.registerFont(TTFont('NotoSerifBold', os.path.join(font_dir, "NotoSerif-Bold.ttf")))
     # pdfmetrics.registerFont(TTFont('NotoSerifItalic', os.path.join(font_dir, "NotoSerif-Italic.ttf")))
+
